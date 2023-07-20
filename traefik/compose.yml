@@ -1,0 +1,19 @@
+services:
+  traefik:
+    image: traefik:v2.10
+    container_name: traefik
+    ports:
+      - 80:80
+      - 443:443
+      - 8081:8080  # (optional) expose the dashboard !don't use in production!
+    volumes:
+      - /srv/traefik/config:/etc/traefik
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - /srv/nginx/ssl:/ssl
+    networks:
+      - proxynet
+    restart: unless-stopped
+networks:
+  proxynet:
+    name: proxynet
+    driver: bridge

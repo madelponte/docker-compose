@@ -1,0 +1,15 @@
+services:
+  nginx:
+    build: ./config/
+    volumes:
+      - /srv/nginx/ssl:/ssl/
+    ports:
+      - 80:80
+      - 443:443
+    networks:
+      - proxynet
+    restart: unless-stopped
+networks:
+  proxynet:
+    name: proxynet
+    driver: bridge

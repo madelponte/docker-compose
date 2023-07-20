@@ -1,0 +1,17 @@
+services:
+  FTB:
+    # FTBA support is only available in non-Alpine images
+    image: itzg/minecraft-server
+    ports:
+      # expose the Minecraft server port outside of container
+      - 25565:25565
+    environment:
+      # REQUIRED for all types
+      EULA: "TRUE"
+      # Set server type (vs the default of vanilla)
+      TYPE: FTBA
+      # Use Pack ID from https://ftb.neptunepowered.org/pack/ftb-presents-direwolf20-1-12/
+      FTB_MODPACK_ID: "101"
+    volumes:
+      # use a named, managed volume for data volume
+      - /srv/ftb:/data
