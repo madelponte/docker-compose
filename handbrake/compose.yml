@@ -6,7 +6,7 @@ services:
       - TZ=America/New_York
       - DARK_MODE=1
     ports:
-      - 5800:5800/tcp
+      - 5800
     devices:
       - /dev/dri:/dev/dri
     volumes:
