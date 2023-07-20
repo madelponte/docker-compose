@@ -20,8 +20,8 @@ services:
       driver: json-file
       options:
           max-size: 10m
-    ports:
-      - 9091
+#    ports:
+#      - 9091
     image: haugene/transmission-openvpn
     restart: unless-stopped
     sysctls:

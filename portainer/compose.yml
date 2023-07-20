@@ -2,8 +2,8 @@ services:
   portainer:
     image: portainer/portainer-ce:latest
     container_name: portainer
-    ports:
-      - 9443
+#    ports:
+#      - "9443"
     volumes:
       - /srv/portainer:/data
       - /var/run/docker.sock:/var/run/docker.sock
