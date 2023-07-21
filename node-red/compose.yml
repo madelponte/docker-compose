@@ -6,5 +6,5 @@ services:
     ports:
       - "1880:1880"
     volumes:
-      - /srv/node-red:/data
-      - /srv/nginx/ssl:/ssl/
+      - /srv/node-red/data:/data
+      - /srv/node-red/ssl:/ssl/
