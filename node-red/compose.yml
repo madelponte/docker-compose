@@ -3,13 +3,8 @@ services:
     image: nodered/node-red:latest
     environment:
       - TZ=America/New_York
-    #ports:
-    #  - "1880:1880"
-    networks:
-      - proxynet
+    ports:
+      - "1880:1880"
     volumes:
       - /srv/node-red:/data
-networks:
-  proxynet:
-    external: true
-    name: proxynet
+      - /srv/nginx/ssl:/ssl/
