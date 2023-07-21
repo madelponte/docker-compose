@@ -6,6 +6,10 @@ services:
     #ports:
     #  - "1880:1880"
     networks:
-      - node-red-net
+      - proxynet
     volumes:
       - /srv/node-red:/data
+networks:
+  proxynet:
+    external: true
+    name: proxynet
