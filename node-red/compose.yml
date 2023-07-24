@@ -8,3 +8,4 @@ services:
     volumes:
       - /srv/node-red/data:/data
       - /srv/node-red/ssl:/ssl/
+    restart: unless-stopped
