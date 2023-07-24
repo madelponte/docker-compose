@@ -7,10 +7,12 @@ services:
       - '/srv/transmission/config:/config'
       - '/srv/transmission/openvpn:/etc/openvpn/custom/'
     environment:
-      - OPENVPN_PROVIDER=MULLVAD
-      - OPENVPN_CONFIG=us_qas
-      - OPENVPN_USERNAME=${OPENVPN_USERNAME}
-      - OPENVPN_PASSWORD=${OPENVPN_PASSWORD}
+      - OPENVPN_PROVIDER=custom
+      - OPENVPN_CONFIG=airvpn
+      #- OPENVPN_PROVIDER=MULLVAD
+      #- OPENVPN_CONFIG=us_qas
+      #- OPENVPN_USERNAME=${MULLVAD_USERNAME}
+      #- OPENVPN_PASSWORD=${MULLVAD_PASSWORD}
       - LOCAL_NETWORK=192.168.2.0/24
       - TZ=America/New_York
       - TRANSMISSION_RPC_USERNAME=${TRANSMISSION_USERNAME}
