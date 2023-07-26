@@ -1,6 +1,7 @@
 services:
   nginx:
     build: ./config/
+    container_name: nginx
     volumes:
       - /srv/nginx/ssl:/ssl/
     ports:
