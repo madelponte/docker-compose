@@ -2,6 +2,7 @@ services:
   FTB:
     # FTBA support is only available in non-Alpine images
     image: itzg/minecraft-server
+    container_name: ftb
     ports:
       # expose the Minecraft server port outside of container
       - 25565:25565
