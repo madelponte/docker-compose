@@ -2,6 +2,7 @@ services:
   unpackerr:
     image: golift/unpackerr
     container_name: unpackerr
+    user: 1000:1000
     volumes:
       - /mnt/torrents:/downloads
     restart: always
