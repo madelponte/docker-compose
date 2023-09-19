@@ -4,6 +4,7 @@ services:
     container_name: unpackerr
     volumes:
       - /mnt/torrents:/downloads
+      - /srv/unpackerr:/config
     restart: always
     # What you see below are defaults for this compose. You only need to modify things specific to your environment.
     # Remove apps and feature configs you do not use or need. 
@@ -32,7 +33,7 @@ services:
       - UN_WEBSERVER_SSL_KEY_FILE=
       - UN_WEBSERVER_URLBASE=/
       - UN_WEBSERVER_UPSTREAMS=
-      
+
     security_opt:
       - no-new-privileges:true
     networks:
