@@ -1,0 +1,15 @@
+services:
+  unpackerr:
+    image: golift/unpackerr
+    container_name: unpackerr
+    volumes:
+      - /mnt/torrents:/downloads
+    restart: always
+    # What you see below are defaults for this compose. You only need to modify things specific to your environment.
+    # Remove apps and feature configs you do not use or need. 
+    # ie. Remove all lines that begin with UN_CMDHOOK, UN_WEBHOOK, UN_FOLDER, UN_WEBSERVER, and other apps you do not use.
+    environment:
+      - TZ=America/New_York
+    
+    security_opt:
+      - no-new-privileges:true
