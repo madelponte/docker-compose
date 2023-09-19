@@ -1,44 +1,12 @@
 services:
   unpackerr:
-    image: golift/unpackerr
     container_name: unpackerr
-    volumes:
-      - /mnt/torrents:/downloads
-      - /srv/unpackerr:/config
-    restart: always
-    # What you see below are defaults for this compose. You only need to modify things specific to your environment.
-    # Remove apps and feature configs you do not use or need. 
-    # ie. Remove all lines that begin with UN_CMDHOOK, UN_WEBHOOK, UN_FOLDER, UN_WEBSERVER, and other apps you do not use.
+    image: ghcr.io/hotio/unpackerr
     environment:
-      - TZ=America/New_York
-      # General config
-      - UN_DEBUG=false
-      - UN_LOG_FILE=
-      - UN_LOG_FILES=10
-      - UN_LOG_FILE_MB=10
-      - UN_INTERVAL=2m
-      - UN_START_DELAY=1m
-      - UN_RETRY_DELAY=5m
-      - UN_MAX_RETRIES=3
-      - UN_PARALLEL=1
-      - UN_FILE_MODE=0644
-      - UN_DIR_MODE=0755
-      # Web Server Config
-      - UN_WEBSERVER_METRICS=false
-      - UN_WEBSERVER_LISTEN_ADDR=0.0.0.0:5656
-      - UN_WEBSERVER_LOG_FILE=
-      - UN_WEBSERVER_LOG_FILES=10
-      - UN_WEBSERVER_LOG_FILE_MB=10
-      - UN_WEBSERVER_SSL_CERT_FILE=
-      - UN_WEBSERVER_SSL_KEY_FILE=
-      - UN_WEBSERVER_URLBASE=/
-      - UN_WEBSERVER_UPSTREAMS=
-
-    security_opt:
-      - no-new-privileges:true
-    networks:
-      - proxynet
-networks:
-  proxynet:
-    external: true
-    name: proxynet
+      - PUID=1000
+      - PGID=1000
+      - UMASK=002
+      - TZ=Etc/UTC
+    volumes:
+      - /<host_folder_config>:/config
+      - /<host_folder_data>:/data
