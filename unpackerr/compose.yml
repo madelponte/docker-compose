@@ -35,3 +35,9 @@ services:
       
     security_opt:
       - no-new-privileges:true
+    networks:
+      - proxynet
+networks:
+  proxynet:
+    external: true
+    name: proxynet
