@@ -1,0 +1,20 @@
+services:
+  jellyfin:
+    image: jellyfin/jellyfin
+    container_name: jellyfin
+    network_mode: 'host'
+    volumes:
+      - /srv/jellyfin/config:/config
+      - /srv/jellyfin/cache:/cache
+      - /mnt/music/:/media/music:ro
+      - /mnt/video/:/media/videos:ro
+      - /mnt/torrents/:/media/torrents:ro
+    restart: 'unless-stopped'
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+networks:
+      - proxynet
+networks:
+  proxynet:
+    external: true
+    name: proxynet
