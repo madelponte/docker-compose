@@ -16,6 +16,8 @@ services:
       - "host.docker.internal:host-gateway"
     networks:
       - proxynet
+    devices:
+      - /dev/dri:/dev/dri
 networks:
   proxynet:
     external: true
