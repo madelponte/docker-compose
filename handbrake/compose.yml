@@ -13,7 +13,7 @@ services:
       - /srv/handbrake/config:/config:rw
       - /mnt/video/:/output:rw
       - /mnt/torrents/:/storage:ro
-      - /mnt/torrents/autoconvert/:/watch:rw
+      - /mnt/torrents/autoconvert/:/watch
     restart: unless-stopped
     networks:
       - proxynet
