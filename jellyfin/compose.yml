@@ -12,7 +12,7 @@ services:
       - /srv/jellyfin/cache:/cache
       - /mnt/music/:/media/music:ro
       - /mnt/video/:/media/videos:ro
-      - /mnt/torrents/:/media/torrents:ro
+      - /mnt/downloads/:/media/downloads:ro
     restart: 'unless-stopped'
     extra_hosts:
       - "host.docker.internal:host-gateway"

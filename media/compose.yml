@@ -1,0 +1,145 @@
+version: "3.2"
+services:
+  jackett:
+    image: linuxserver/jackett
+    container_name: jackett
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=America/New_York
+    volumes:
+      - /srv/jackett/config:/config
+    ports:
+      - 9117:9117
+    restart: unless-stopped
+
+  sonarr:
+    image: linuxserver/sonarr
+    container_name: sonarr
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=America/New_York
+    volumes:
+      - /srv/sonarr/config:/config
+      - /mnt/video/tvshows:/tv
+      - /mnt/downloads/complete:/downloads
+    ports:
+      - 8989:8989
+    restart: unless-stopped
+
+  radarr:
+    image: linuxserver/radarr
+    container_name: radarr
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=America/New_York
+    volumes:
+      - /srv/radarr/config:/config
+      - /mnt/video/movies:/movies
+      - /mnt/downloads/complete:/downloads
+    ports:
+      - 7878:7878
+    restart: unless-stopped
+
+  lidarr:
+    image: linuxserver/lidarr
+    container_name: lidarr
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=America/New_York
+    volumes:
+      - /srv/lidarr/config:/config
+      - /mnt/music:/music
+      - /mnt/downloads/complete:/downloads
+    ports:
+      - 8686:8686
+    restart: unless-stopped
+
+  bazarr:
+    image: linuxserver/bazarr
+    container_name: bazarr
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=America/New_York
+    volumes:
+      - /srv/bazarr/config:/config
+      - /mnt/video/movies:/movies
+      - /mnt/video/tvshows:/tv
+    ports:
+      - 6767:6767
+    restart: unless-stopped
+
+  unpackerr:
+    image: golift/unpackerr
+    container_name: unpackerr
+    restart: unless-stopped
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - UMASK=002
+      - TZ=America/New_York
+      - UN_SONARR_0_URL=[sonarr or hostname]
+      - UN_SONARR_0_API_KEY=[api key]
+      - UN_RADARR_0_URL=[radarr or hostname]
+      - UN_RADARR_0_API_KEY=[api key]
+      - UN_LIDARR_0_URL=[lidarr or hostname]
+      - UN_LIDARR_0_API_KEY=[api key]
+    volumes:
+      - /srv/unpackerr/config:/config
+      - /mnt/downloads/complete:/downloads
+
+  flaresolverr:
+    container_name: flaresolverr
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    environment:
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+      - LOG_HTML=${LOG_HTML:-false}
+      - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
+      - TZ=America/New_York
+    ports:
+      - "${PORT:-8191}:8191"
+    restart: unless-stopped
+
+  nzbget:
+    image: linuxserver/nzbget
+    container_name: nzbget
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=America/New_York
+    volumes:
+      - /srv/nzbget/config:/config
+      - /mnt/downloads:/downloads
+    ports:
+      - 6789:6789
+    restart: unless-stopped
+
+  tautulli:
+    image: lscr.io/linuxserver/tautulli:latest
+    container_name: tautulli
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=America/New_York
+    volumes:
+      - /srv/tautulli/config:/config
+    ports:
+      - 8181:8181
+    restart: unless-stopped
+
+  overseerr:
+    image: lscr.io/linuxserver/overseerr:latest
+    container_name: overseerr
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=America/New_York
+    volumes:
+      - /srv/overseer/config:/config
+    ports:
+      - 5055:5055
+    restart: unless-stopped

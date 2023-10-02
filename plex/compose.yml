@@ -13,5 +13,5 @@ services:
       - /srv/plex/transcode:/transcode
       - /mnt/music/:/data/music
       - /mnt/video/:/data/videos
-      - /mnt/torrents/:/data/torrents
+      - /mnt/downloads/:/data/downloads
     restart: unless-stopped
