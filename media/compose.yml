@@ -23,7 +23,7 @@ services:
     volumes:
       - /srv/sonarr/config:/config
       - /mnt/video/tvshows:/tv
-      - /mnt/downloads/complete:/downloads
+      - /mnt/downloads/completed:/downloads
     ports:
       - 8989:8989
     restart: unless-stopped
@@ -38,7 +38,7 @@ services:
     volumes:
       - /srv/radarr/config:/config
       - /mnt/video/movies:/movies
-      - /mnt/downloads/complete:/downloads
+      - /mnt/downloads/completed:/downloads
     ports:
       - 7878:7878
     restart: unless-stopped
@@ -53,7 +53,7 @@ services:
     volumes:
       - /srv/lidarr/config:/config
       - /mnt/music:/music
-      - /mnt/downloads/complete:/downloads
+      - /mnt/downloads/completed:/downloads
     ports:
       - 8686:8686
     restart: unless-stopped
@@ -90,7 +90,7 @@ services:
       - UN_LIDARR_0_API_KEY=[api key]
     volumes:
       - /srv/unpackerr/config:/config
-      - /mnt/downloads/complete:/downloads
+      - /mnt/downloads/completed:/downloads
 
   flaresolverr:
     container_name: flaresolverr
