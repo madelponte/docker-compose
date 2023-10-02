@@ -12,8 +12,8 @@ services:
     volumes:
       - /srv/handbrake/config:/config:rw
       - /mnt/video/:/output:rw
-      - /mnt/torrents/:/storage:ro
-      - /mnt/torrents/autoconvert/:/watch
+      - /mnt/downloads/:/storage:ro
+      - /mnt/downloads/autoconvert/:/watch
     restart: unless-stopped
     networks:
       - proxynet
