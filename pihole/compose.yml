@@ -29,7 +29,7 @@ services:
       - "53:53/tcp"
       - "53:53/udp"
       - "67:67/udp" # Only required if you are using Pi-hole as your DHCP server
-      - "80:80/tcp"
+      - "8080:80/tcp"
     dns:
       - 127.0.0.1
       - 10.2.0.200 # Points to unbound
