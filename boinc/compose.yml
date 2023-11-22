@@ -3,6 +3,8 @@ services:
   boinc:
     image: lscr.io/linuxserver/boinc:latest
     container_name: boinc
+    group_add:
+      - "105"
     #security_opt:
     # - seccomp:unconfined #optional
     environment:
