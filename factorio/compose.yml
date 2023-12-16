@@ -5,8 +5,8 @@ services:
       - "34197:34197/udp"
     volumes:
      - /srv/factorio/data:/factorio
-     - /srv/factorio/server-settings.json:/server-settings.json
+     - /srv/factorio/server-settings.json:/factorio/config/server-settings.json
     environment:
       - INSTANCE_NAME=Marcus' Server
       - INSTANCE_DESC=idk dont break anything
-    entrypoint: /bin/sh -c "mkdir -p /factorio/config && envsubst < /server-settings.json > /factorio/config/server-settings.json && exec /docker-entrypoint.sh"
+    entrypoint: /bin/sh -c "exec /docker-entrypoint.sh"
