@@ -30,8 +30,6 @@ services:
   immich-microservices:
     container_name: immich_microservices
     image: ghcr.io/immich-app/immich-server:${IMMICH_VERSION:-release}
-    group_add:
-      - "105"
     extends:
       file: hwaccel.yml
       service: hwaccel
