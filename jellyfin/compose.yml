@@ -9,7 +9,7 @@ services:
       - "7359:7359"
     volumes:
       - /srv/jellyfin/config:/config
-      - /tmp/jellyfin:/cache
+      - jellyfin-cache:/cache
       - /mnt/music/:/media/music:ro
       - /mnt/video/:/media/videos:ro
       - /mnt/downloads/:/media/downloads:ro
@@ -24,3 +24,5 @@ networks:
   proxynet:
     external: true
     name: proxynet
+volumes:
+  jellyfin-cache:
