@@ -9,7 +9,7 @@ services:
       - "7359:7359"
     volumes:
       - /srv/jellyfin/config:/config
-      - /srv/jellyfin/cache:/cache
+      - /tmp/jellyfin:/cache
       - /mnt/music/:/media/music:ro
       - /mnt/video/:/media/videos:ro
       - /mnt/downloads/:/media/downloads:ro
