@@ -4,6 +4,7 @@ services:
     container_name: nginx
     volumes:
       - /srv/nginx/ssl:/ssl/
+      - /srv/nginx/logs:/var/log/nginx
     ports:
       - 80:80
       - 443:443
