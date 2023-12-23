@@ -28,20 +28,20 @@ services:
       - 8989:8989
     restart: unless-stopped
 
-  radarr:
-    image: linuxserver/radarr
-    container_name: radarr
-    environment:
-      - PUID=1001
-      - PGID=1001
-      - TZ=America/New_York
-    volumes:
-      - /srv/radarr/config:/config
-      - /mnt/media/movies:/movies
-      - /mnt/media/downloads:/downloads
-    ports:
-      - 7878:7878
-    restart: unless-stopped
+  #radarr:
+  #  image: linuxserver/radarr
+  #  container_name: radarr
+  #  environment:
+  #    - PUID=1001
+  #    - PGID=1001
+  #    - TZ=America/New_York
+  #  volumes:
+  #    - /srv/radarr/config:/config
+  #    - /mnt/media/movies:/movies
+  #    - /mnt/media/downloads:/downloads
+  #  ports:
+  #    - 7878:7878
+  #  restart: unless-stopped
 
   lidarr:
     image: linuxserver/lidarr
@@ -58,20 +58,20 @@ services:
       - 8686:8686
     restart: unless-stopped
 
-  bazarr:
-    image: linuxserver/bazarr
-    container_name: bazarr
-    environment:
-      - PUID=1001
-      - PGID=1001
-      - TZ=America/New_York
-    volumes:
-      - /srv/bazarr/config:/config
-      - /mnt/media/movies:/movies
-      - /mnt/media/tv:/tv
-    ports:
-      - 6767:6767
-    restart: unless-stopped
+  #bazarr:
+  #  image: linuxserver/bazarr
+  #  container_name: bazarr
+  #  environment:
+  #    - PUID=1001
+  #    - PGID=1001
+  #    - TZ=America/New_York
+  #  volumes:
+  #    - /srv/bazarr/config:/config
+  #    - /mnt/media/movies:/movies
+  #    - /mnt/media/tv:/tv
+  #  ports:
+  #    - 6767:6767
+  #  restart: unless-stopped
 
   unpackerr:
     image: golift/unpackerr
