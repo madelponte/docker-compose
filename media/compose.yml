@@ -82,12 +82,12 @@ services:
       - PGID=1001
       - UMASK=002
       - TZ=America/New_York
-      - UN_SONARR_0_URL=[sonarr or hostname]
-      - UN_SONARR_0_API_KEY=[api key]
-      - UN_RADARR_0_URL=[radarr or hostname]
-      - UN_RADARR_0_API_KEY=[api key]
-      - UN_LIDARR_0_URL=[lidarr or hostname]
-      - UN_LIDARR_0_API_KEY=[api key]
+      - UN_SONARR_0_URL=${SONARR_URL}
+      - UN_SONARR_0_API_KEY=${SONARR_API}
+      - UN_RADARR_0_URL=${RADARR_URL}
+      - UN_RADARR_0_API_KEY=${RADARR_API}
+      - UN_LIDARR_0_URL=${LIDARR_URL}
+      - UN_LIDARR_0_API_KEY=${LIDARR_API}
     volumes:
       - /srv/unpackerr/config:/config
       - /mnt/downloads/completed:/downloads
