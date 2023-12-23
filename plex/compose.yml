@@ -14,4 +14,5 @@ services:
       - /mnt/music/:/data/music
       - /mnt/video/:/data/videos
       - /mnt/downloads/:/data/downloads
+      - /mnt/media:/data/media
     restart: unless-stopped

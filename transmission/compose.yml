@@ -4,6 +4,7 @@ services:
       - NET_ADMIN
     volumes:
       - '/mnt/downloads:/data'
+      - '/mnt/media/downloads:/downloads'
       - '/srv/transmission/config:/config'
       - '/srv/transmission/openvpn:/etc/openvpn/custom/'
     environment:
