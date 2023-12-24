@@ -70,6 +70,7 @@ services:
       - /srv/bazarr/config:/config
       - /mnt/media/movies:/movies
       - /mnt/media/tv:/tv
+      - /mnt/media/anime:/anime
     ports:
       - 6767:6767
     restart: unless-stopped
