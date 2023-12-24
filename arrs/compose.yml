@@ -59,20 +59,20 @@ services:
       - 8686:8686
     restart: unless-stopped
 
-  #bazarr:
-  #  image: linuxserver/bazarr
-  #  container_name: bazarr
-  #  environment:
-  #    - PUID=1001
-  #    - PGID=1001
-  #    - TZ=America/New_York
-  #  volumes:
-  #    - /srv/bazarr/config:/config
-  #    - /mnt/media/movies:/movies
-  #    - /mnt/media/tv:/tv
-  #  ports:
-  #    - 6767:6767
-  #  restart: unless-stopped
+  bazarr:
+    image: linuxserver/bazarr
+    container_name: bazarr
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=America/New_York
+    volumes:
+      - /srv/bazarr/config:/config
+      - /mnt/media/movies:/movies
+      - /mnt/media/tv:/tv
+    ports:
+      - 6767:6767
+    restart: unless-stopped
 
   unpackerr:
     image: golift/unpackerr
@@ -105,19 +105,19 @@ services:
       - "${PORT:-8191}:8191"
     restart: unless-stopped
 
-  nzbget:
-    image: linuxserver/nzbget
-    container_name: nzbget
-    environment:
-      - PUID=1001
-      - PGID=1001
-      - TZ=America/New_York
-    volumes:
-      - /srv/nzbget/config:/config
-      - /mnt/media/downloads:/downloads
-    ports:
-      - 6788:6789
-    restart: unless-stopped
+  #nzbget:
+  #  image: linuxserver/nzbget
+  #  container_name: nzbget
+  #  environment:
+  #    - PUID=1001
+  #    - PGID=1001
+  #    - TZ=America/New_York
+  #  volumes:
+  #    - /srv/nzbget/config:/config
+  #    - /mnt/media/downloads:/downloads
+  #  ports:
+  #    - 6788:6789
+  #  restart: unless-stopped
 
   #tautulli:
   #  image: lscr.io/linuxserver/tautulli:latest
