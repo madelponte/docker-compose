@@ -23,6 +23,7 @@ services:
     volumes:
       - /srv/sonarr/config:/config
       - /mnt/media/tv:/tv
+      - /mnt/media/anime:/anime
       - /mnt/media/downloads:/downloads
     ports:
       - 8989:8989
