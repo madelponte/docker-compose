@@ -11,9 +11,22 @@ services:
       - /dev/dri:/dev/dri
     volumes:
       - /srv/handbrake/config:/config:rw
-      - /mnt/video/:/output:rw
-      - /mnt/downloads/:/storage:ro
-      - /mnt/downloads/autoconvert/:/watch
+      - /mnt/media/output:/output:rw
+      - /root:/storage:ro
+    restart: unless-stopped
+    networks:
+      - proxynet
+  makemkv:
+    image: jlesage/makemkv:latest
+    container_name: makemkv
+    ports:
+      - 5801:5800
+    devices:
+      - /dev/sr0:/dev/sr0
+    volumes:
+      - /srv/makemkv/config:/config
+      - /root:/storage:ro
+      - /mnt/media/output:/output
     restart: unless-stopped
     networks:
       - proxynet
