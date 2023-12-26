@@ -40,6 +40,7 @@ services:
       - /srv/radarr/config:/config
       - /mnt/media/movies:/movies
       - /mnt/media/downloads:/downloads
+      - /mnt/media/anime-movies:/anime-movies
     ports:
       - 7878:7878
     restart: unless-stopped
@@ -71,6 +72,7 @@ services:
       - /mnt/media/movies:/movies
       - /mnt/media/tv:/tv
       - /mnt/media/anime:/anime
+      - /mnt/media/anime-movies:/anime-movies
     ports:
       - 6767:6767
     restart: unless-stopped
