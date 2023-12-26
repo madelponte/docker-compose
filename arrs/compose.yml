@@ -29,20 +29,20 @@ services:
       - 8989:8989
     restart: unless-stopped
 
-  #radarr:
-  #  image: linuxserver/radarr
-  #  container_name: radarr
-  #  environment:
-  #    - PUID=1001
-  #    - PGID=1001
-  #    - TZ=America/New_York
-  #  volumes:
-  #    - /srv/radarr/config:/config
-  #    - /mnt/media/movies:/movies
-  #    - /mnt/media/downloads:/downloads
-  #  ports:
-  #    - 7878:7878
-  #  restart: unless-stopped
+  radarr:
+    image: linuxserver/radarr
+    container_name: radarr
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=America/New_York
+    volumes:
+      - /srv/radarr/config:/config
+      - /mnt/media/movies:/movies
+      - /mnt/media/downloads:/downloads
+    ports:
+      - 7878:7878
+    restart: unless-stopped
 
   lidarr:
     image: linuxserver/lidarr
@@ -120,28 +120,28 @@ services:
   #    - 6788:6789
   #  restart: unless-stopped
 
-  #tautulli:
-  #  image: lscr.io/linuxserver/tautulli:latest
-  #  container_name: tautulli
-  #  environment:
-  #    - PUID=1001
-  #    - PGID=1001
-  #    - TZ=America/New_York
-  #  volumes:
-  #    - /srv/tautulli/config:/config
-  #  ports:
-  #    - 8181:8181
-  #  restart: unless-stopped
-
-  overseerr:
-    image: lscr.io/linuxserver/overseerr:latest
-    container_name: overseerr
+  tautulli:
+    image: lscr.io/linuxserver/tautulli:latest
+    container_name: tautulli
     environment:
       - PUID=1001
       - PGID=1001
       - TZ=America/New_York
     volumes:
-      - /srv/overseer/config:/config
+      - /srv/tautulli/config:/config
     ports:
-      - 5055:5055
+      - 8181:8181
     restart: unless-stopped
+
+  #overseerr:
+  #  image: lscr.io/linuxserver/overseerr:latest
+  #  container_name: overseerr
+  #  environment:
+  #    - PUID=1001
+  #    - PGID=1001
+  #    - TZ=America/New_York
+  #  volumes:
+  #    - /srv/overseer/config:/config
+  #  ports:
+  #    - 5055:5055
+  #  restart: unless-stopped
