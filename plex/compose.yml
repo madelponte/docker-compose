@@ -10,9 +10,8 @@ services:
       - /dev/dri:/dev/dri
     volumes:
       - /srv/plex/config:/config
-      - /srv/plex/transcode:/transcode
-      - /mnt/music/:/data/music
-      - /mnt/video/:/data/videos
-      - /mnt/downloads/:/data/downloads
+      - plex-transcode:/transcode
       - /mnt/media:/data/media
     restart: unless-stopped
+volumes:
+  plex-transcode:
