@@ -3,7 +3,7 @@ services:
     cap_add:
       - NET_ADMIN
     volumes:
-      - '/mnt/media/downloads:/downloads'
+      - '/mnt/media/downloads:/data/completed'
       - '/srv/transmission/config:/config'
       - '/srv/transmission/openvpn:/etc/openvpn/custom/'
     environment:
