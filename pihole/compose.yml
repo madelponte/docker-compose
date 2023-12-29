@@ -16,7 +16,7 @@ services:
     restart: unless-stopped
     networks:
       piholevlan:
-        ipv4_address: 192.168.2.23
+        ipv4_address: 192.168.2.22
 
 networks:
   piholevlan:
@@ -27,5 +27,5 @@ networks:
     ipam:
       config:
         - subnet: "192.168.2.0/24"
-          ip_range: "192.168.2.23/32"
+          ip_range: "192.168.2.22/32"
           gateway: "192.168.2.1"
