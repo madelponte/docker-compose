@@ -6,6 +6,7 @@ services:
     environment:
       TZ: 'America/New_York'
       WEBPASSWORD: ${PIHOLE_PASSWORD}
+      IPv6: true
     # Volumes store your data between container upgrades
     volumes:
       - '/srv/pihole/etc-pihole:/etc/pihole'
@@ -14,9 +15,12 @@ services:
     cap_add:
       - NET_ADMIN # Required if you are using Pi-hole as your DHCP server, else not needed
     restart: unless-stopped
+    sysctls:
+      - "net.ipv6.conf.all.disable_ipv6=0"
     networks:
       piholevlan:
         ipv4_address: 192.168.2.22
+        ipv6_address: ${IPV6_ADDRESS}
 
 networks:
   piholevlan:
@@ -29,3 +33,5 @@ networks:
         - subnet: "192.168.2.0/24"
           ip_range: "192.168.2.22/32"
           gateway: "192.168.2.1"
+        - subnet: ${IPV6_SUBNET}
+          ip_range: ${IPV6_RANGE}
