@@ -1,5 +1,5 @@
 services:
-  pihole:
+  adguard:
     container_name: adguard
     image: adguard/adguardhome:latest
     volumes:
@@ -9,11 +9,11 @@ services:
       - NET_ADMIN
     restart: unless-stopped
     networks:
-      piholevlan:
+      adguardvlan:
         ipv4_address: 192.168.2.22
 
 networks:
-  piholevlan:
+  adguardvlan:
     name: adguardvlan
     driver: macvlan
     driver_opts:
