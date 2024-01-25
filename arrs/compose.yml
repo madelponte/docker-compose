@@ -45,20 +45,20 @@ services:
       - 7878:7878
     restart: unless-stopped
 
-  lidarr:
-    image: linuxserver/lidarr
-    container_name: lidarr
-    environment:
-      - PUID=1001
-      - PGID=1001
-      - TZ=America/New_York
-    volumes:
-      - /srv/lidarr/config:/config
-      - /mnt/media/music:/music
-      - /mnt/media/downloads:/downloads
-    ports:
-      - 8686:8686
-    restart: unless-stopped
+  #lidarr:
+  #  image: linuxserver/lidarr
+  #  container_name: lidarr
+  #  environment:
+  #    - PUID=1001
+  #    - PGID=1001
+  #    - TZ=America/New_York
+  #  volumes:
+  #    - /srv/lidarr/config:/config
+  #    - /mnt/media/music:/music
+  #    - /mnt/media/downloads:/downloads
+  #  ports:
+  #    - 8686:8686
+  #  restart: unless-stopped
 
   bazarr:
     image: linuxserver/bazarr
