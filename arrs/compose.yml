@@ -100,13 +100,13 @@ services:
       - UN_RADARR_0_TIMEOUT=10s
       - UN_RADARR_0_DELETE_ORIG=false
       - UN_RADARR_0_DELETE_DELAY=5m
-      - UN_LIDARR_0_URL=${LIDARR_URL}
-      - UN_LIDARR_0_API_KEY=${LIDARR_API}
-      - UN_LIDARR_0_PATHS_0=/data/completed/music
-      - UN_LIDARR_0_PROTOCOLS=torrent
-      - UN_LIDARR_0_TIMEOUT=10s
-      - UN_LIDARR_0_DELETE_ORIG=false
-      - UN_LIDARR_0_DELETE_DELAY=5m
+      #- UN_LIDARR_0_URL=${LIDARR_URL}
+      #- UN_LIDARR_0_API_KEY=${LIDARR_API}
+      #- UN_LIDARR_0_PATHS_0=/data/completed/music
+      #- UN_LIDARR_0_PROTOCOLS=torrent
+      #- UN_LIDARR_0_TIMEOUT=10s
+      #- UN_LIDARR_0_DELETE_ORIG=false
+      #- UN_LIDARR_0_DELETE_DELAY=5m
     volumes:
       - /srv/unpackerr/config:/config
       - /mnt/media/downloads:/data/completed
