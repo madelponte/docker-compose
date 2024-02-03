@@ -1,6 +1,6 @@
 services:
   node-red:
-    image: nodered/node-red:latest
+    image: docker.io/nodered/node-red:latest
     container_name: node-red
     environment:
       - TZ=America/New_York

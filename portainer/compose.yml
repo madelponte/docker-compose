@@ -1,6 +1,6 @@
 services:
   portainer:
-    image: portainer/portainer-ce:latest
+    image: docker.io/portainer/portainer-ce:latest
     container_name: portainer
 #    ports:
 #      - "9443"

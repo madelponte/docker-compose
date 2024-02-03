@@ -1,6 +1,6 @@
 services:
   handbrake:
-    image: jlesage/handbrake:latest
+    image: docker.io/jlesage/handbrake:latest
     container_name: handbrake
     environment:
       - TZ=America/New_York
@@ -17,7 +17,7 @@ services:
     networks:
       - proxynet
   makemkv:
-    image: jlesage/makemkv:latest
+    image: docker.io/jlesage/makemkv:latest
     container_name: makemkv
     ports:
       - 5801:5800

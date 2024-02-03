@@ -1,6 +1,6 @@
 services:
   homebridge:
-    image: homebridge/homebridge:latest
+    image: docker.io/homebridge/homebridge:latest
     container_name: homebridge
     restart: always
     network_mode: host

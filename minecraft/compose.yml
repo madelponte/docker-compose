@@ -1,6 +1,6 @@
 services:
   minecraft:
-    image: itzg/minecraft-server:latest
+    image: docker.io/itzg/minecraft-server:latest
     container_name: minecraft
     ports:
       - "25565:25565"
