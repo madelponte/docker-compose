@@ -1,6 +1,6 @@
 services:
   factorio:
-    image: factoriotools/factorio:stable
+    image: docker.io/factoriotools/factorio:stable
     ports:
       - "34197:34197/udp"
     volumes:

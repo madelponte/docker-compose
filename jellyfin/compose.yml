@@ -1,6 +1,6 @@
 services:
   jellyfin:
-    image: jellyfin/jellyfin:latest
+    image: docker.io/jellyfin/jellyfin:latest
     container_name: jellyfin
     group_add:
       - "105"
