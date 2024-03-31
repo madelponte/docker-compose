@@ -1,0 +1,9 @@
+services:
+  whisper:
+    image: liquidinvestigations/openai-whisper-gradio:v1
+    container_name: whisper
+    ports:
+      - "8000:8000"
+    #volumes:
+    #  - /srv/duckdns:/config #optional
+    restart: unless-stopped
