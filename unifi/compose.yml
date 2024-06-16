@@ -27,14 +27,9 @@ services:
       - 5514:5514/udp #optional
     restart: unless-stopped
   unifi-db:
-    image: docker.io/mongo:7
+    image: docker.io/mongo:5
     container_name: unifi-db
-    environment:
-      - MONGO_USER=unifi
-      - MONGO_PASS=${MONGOPASS}
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=${MONGOROOTPASS}
     volumes:
       - /srv/unifi/db:/data/db
-      - /srv/unifi/init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh:ro
+      - /srv/unifi/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
     restart: unless-stopped
