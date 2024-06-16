@@ -27,7 +27,7 @@ services:
       - 5514:5514/udp #optional
     restart: unless-stopped
   unifi-db:
-    image: docker.io/mongo:5
+    image: docker.io/mongo:6
     container_name: unifi-db
     volumes:
       - /srv/unifi/db:/data/db
