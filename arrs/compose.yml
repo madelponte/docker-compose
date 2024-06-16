@@ -44,20 +44,20 @@ services:
       - 7878:7878
     restart: unless-stopped
 
-  #lidarr:
-  #  image: lscr.io/linuxserver/lidarr
-  #  container_name: lidarr
-  #  environment:
-  #    - PUID=1001
-  #    - PGID=1001
-  #    - TZ=America/New_York
-  #  volumes:
-  #    - /srv/lidarr/config:/config
-  #    - /mnt/media/music:/music
-  #    - /mnt/media/downloads:/downloads
-  #  ports:
-  #    - 8686:8686
-  #  restart: unless-stopped
+  lidarr:
+    image: lscr.io/linuxserver/lidarr
+    container_name: lidarr
+    environment:
+      - PUID=1001
+      - PGID=1001
+      - TZ=America/New_York
+    volumes:
+      - /srv/lidarr/config:/config
+      - /mnt/media/music_lidar:/music
+      - /mnt/media/downloads:/downloads
+    ports:
+      - 8686:8686
+    restart: unless-stopped
 
   bazarr:
     image: lscr.io/linuxserver/bazarr
@@ -99,13 +99,13 @@ services:
       - UN_RADARR_0_TIMEOUT=10s
       - UN_RADARR_0_DELETE_ORIG=false
       - UN_RADARR_0_DELETE_DELAY=5m
-      #- UN_LIDARR_0_URL=${LIDARR_URL}
-      #- UN_LIDARR_0_API_KEY=${LIDARR_API}
-      #- UN_LIDARR_0_PATHS_0=/data/completed/music
-      #- UN_LIDARR_0_PROTOCOLS=torrent
-      #- UN_LIDARR_0_TIMEOUT=10s
-      #- UN_LIDARR_0_DELETE_ORIG=false
-      #- UN_LIDARR_0_DELETE_DELAY=5m
+      - UN_LIDARR_0_URL=${LIDARR_URL}
+      - UN_LIDARR_0_API_KEY=${LIDARR_API}
+      - UN_LIDARR_0_PATHS_0=/data/completed/music
+      - UN_LIDARR_0_PROTOCOLS=torrent
+      - UN_LIDARR_0_TIMEOUT=10s
+      - UN_LIDARR_0_DELETE_ORIG=false
+      - UN_LIDARR_0_DELETE_DELAY=5m
     volumes:
       - /srv/unpackerr/config:/config
       - /mnt/media/downloads:/data/completed
