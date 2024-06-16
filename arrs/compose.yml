@@ -53,7 +53,7 @@ services:
       - TZ=America/New_York
     volumes:
       - /srv/lidarr/config:/config
-      - /mnt/media/music_lidar:/music
+      - /mnt/media/music_lidarr:/music
       - /mnt/media/downloads:/downloads
     ports:
       - 8686:8686
