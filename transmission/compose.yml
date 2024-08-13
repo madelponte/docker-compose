@@ -26,7 +26,7 @@ services:
       - 9091:9091
     image: docker.io/haugene/transmission-openvpn:latest
     container_name: transmission
-    restart: on-failure:2
+    restart: unless-stopped
     sysctls:
       - "net.ipv6.conf.all.disable_ipv6=0"
     networks:
