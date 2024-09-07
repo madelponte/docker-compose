@@ -14,8 +14,8 @@ services:
     container_name: archiveTeamWarrior
     hostname: archiveTeamWarrior
     environment:
-      - HTTP_USERNAME={$USERNAME}
-      - HTTP_PASSWORD={$PASSWORD}
+      - HTTP_USERNAME=${USERNAME}
+      - HTTP_PASSWORD=${PASSWORD}
       - SELECTED_PROJECT="auto"
     ports:
       - "8001:8001"
