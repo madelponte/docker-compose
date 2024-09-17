@@ -16,7 +16,9 @@ services:
     environment:
       - HTTP_USERNAME=${USERNAME}
       - HTTP_PASSWORD=${PASSWORD}
-      - SELECTED_PROJECT="auto"
+      - SELECTED_PROJECT=auto
+      - DOWNLOADER=${NICKNAME}
+      - CONCURRENT_ITEMS=3
     ports:
       - "8001:8001"
     labels:
