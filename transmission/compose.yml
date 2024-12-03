@@ -2,6 +2,8 @@ services:
   transmission:
     cap_add:
       - NET_ADMIN
+    devices:
+      - /dev/net/tun
     volumes:
       - '/mnt/media/downloads:/data/completed'
       - '/srv/transmission/config:/config'
