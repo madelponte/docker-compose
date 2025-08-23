@@ -1,0 +1,36 @@
+services:
+  ollama:
+    image: ollama/ollama:rocm
+    container_name: ollama
+    security_opt:
+      - seccomp:unconfined
+    devices:
+      - /dev/kfd:/dev/kfd
+      - /dev/dri:/dev/dri
+    group_add:
+      - video
+    #ports:
+    #  - "11434:11434"
+    environment:
+      - HIP_VISIBLE_DEVICES=0
+      #- HSA_OVERRIDE_GFX_VERSION=10.3.0
+      #- OLLAMA_FLASH_ATTENTION=1
+      #- OLLAMA_KV_CACHE_TYPE=q4_0
+    volumes:
+      - /opt/models:/root/.ollama
+
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:${WEBUI_DOCKER_TAG-main}
+    container_name: open-webui
+    volumes:
+      - /srv/open-webui:/app/backend/data
+    depends_on:
+      - ollama
+    ports:
+      - ${OPEN_WEBUI_PORT-3000}:8080
+    environment:
+      - 'OLLAMA_BASE_URL=http://ollama:11434'
+      - 'WEBUI_SECRET_KEY='
+    extra_hosts:
+      - host.docker.internal:host-gateway
+    restart: unless-stopped
