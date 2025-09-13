@@ -1,7 +1,8 @@
 services:
-  ollama:
-    image: ollama/ollama:rocm
-    container_name: ollama
+  llama-swap:
+    image: ghcr.io/mostlygeek/llama-swap:vulkan
+    container_name: llama-swap
+    restart: unless-stopped
     security_opt:
       - seccomp:unconfined
     devices:
@@ -9,15 +10,9 @@ services:
       - /dev/dri:/dev/dri
     group_add:
       - video
-    #ports:
-    #  - "11434:11434"
-    environment:
-      - HIP_VISIBLE_DEVICES=0
-      #- HSA_OVERRIDE_GFX_VERSION=10.3.0
-      #- OLLAMA_FLASH_ATTENTION=1
-      #- OLLAMA_KV_CACHE_TYPE=q4_0
     volumes:
-      - /opt/models:/root/.ollama
+      - /opt/models:/models
+      - /srv/llama-swap/config.yaml:/app/config.yaml
 
   open-webui:
     image: ghcr.io/open-webui/open-webui:${WEBUI_DOCKER_TAG-main}
@@ -25,7 +20,7 @@ services:
     volumes:
       - /srv/open-webui:/app/backend/data
     depends_on:
-      - ollama
+      - llama-swap
     ports:
       - ${OPEN_WEBUI_PORT-3000}:8080
     environment:
