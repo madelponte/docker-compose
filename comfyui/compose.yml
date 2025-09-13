@@ -1,0 +1,16 @@
+services:
+  comfyui:
+    image: docker.io/yanwk/comfyui-boot:rocm 
+    container_name: comfyui
+    devices:
+      - /dev/kfd:/dev/kfd
+      - /dev/dri:/dev/dri
+    group_add:
+      - video
+    ports:
+      - "8188:8188"
+    environment:
+      - HIP_VISIBLE_DEVICES=0
+      - PYTORCH_TUNABLEOP_ENABLED=1
+    volumes:
+      - /srv/comfyui:/root
