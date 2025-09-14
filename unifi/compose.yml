@@ -26,6 +26,8 @@ services:
       - 6789:6789 #optional
       - 5514:5514/udp #optional
     restart: unless-stopped
+    networks:
+      - proxynet
   unifi-db:
     image: docker.io/mongo:6
     container_name: unifi-db
@@ -33,3 +35,8 @@ services:
       - /srv/unifi/db:/data/db
       - /srv/unifi/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
     restart: unless-stopped
+
+networks:
+  proxynet:
+    external: true
+    name: proxynet
