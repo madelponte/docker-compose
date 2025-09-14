@@ -26,6 +26,12 @@ services:
       - 6789:6789 #optional
       - 5514:5514/udp #optional
     restart: unless-stopped
+    labels:
+      - "traefik.http.routers.unifi.rule=Host(`unifi.home`)" 
+      - "traefik.http.routers.unifi.entrypoints=websecure"
+      - "traefik.http.routers.unifi.tls=true"
+      - "traefik.enable=true"
+      - "traefik.http.middlewares.redirect-middleware.redirectscheme.scheme=https"
     networks:
       - proxynet
   unifi-db:
@@ -35,6 +41,8 @@ services:
       - /srv/unifi/db:/data/db
       - /srv/unifi/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
     restart: unless-stopped
+    networks:
+      - proxynet
 
 networks:
   proxynet:

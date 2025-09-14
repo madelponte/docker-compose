@@ -13,6 +13,8 @@ services:
     volumes:
       - /opt/models:/models
       - /srv/llama-swap/config.yaml:/app/config.yaml
+    networks:
+      - proxynet
 
   open-webui:
     image: ghcr.io/open-webui/open-webui:${WEBUI_DOCKER_TAG-main}
@@ -21,14 +23,20 @@ services:
       - /srv/open-webui:/app/backend/data
     depends_on:
       - llama-swap
-    ports:
-      - ${OPEN_WEBUI_PORT-3000}:8080
+    #ports:
+    #  - ${OPEN_WEBUI_PORT-3000}:8080
     environment:
       - 'OLLAMA_BASE_URL=http://ollama:11434'
       - 'WEBUI_SECRET_KEY='
     extra_hosts:
       - host.docker.internal:host-gateway
     restart: unless-stopped
+    labels:
+      - "traefik.http.routers.open-webui.rule=Host(`ai.home`)" 
+      - "traefik.http.routers.open-webui.entrypoints=websecure"
+      - "traefik.http.routers.open-webui.tls=true"
+      - "traefik.enable=true"
+      - "traefik.http.middlewares.redirect-middleware.redirectscheme.scheme=https"
     networks:
       - proxynet
 

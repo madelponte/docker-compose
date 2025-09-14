@@ -8,6 +8,12 @@ services:
       - /run/dbus:/run/dbus:ro
     restart: unless-stopped
     privileged: true
+    labels:
+      - "traefik.http.routers.homeassistant.rule=Host(`homeassistant.home`)" 
+      - "traefik.http.routers.homeassistant.entrypoints=websecure"
+      - "traefik.http.routers.homeassistant.tls=true"
+      - "traefik.enable=true"
+      - "traefik.http.middlewares.redirect-middleware.redirectscheme.scheme=https"
     networks:
       - proxynet
 
