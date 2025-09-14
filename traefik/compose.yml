@@ -19,6 +19,9 @@ services:
       - "--providers.file.filename=/dynamic/tls.yaml"
       - "--api.dashboard=true"
       - "--api.insecure=false"
+      - "--entrypoints.name.transport.respondingtimeouts.readtimeout=600s"
+      - "--entrypoints.name.transport.respondingtimeouts.writetimeout=600s"
+      - "--entrypoints.name.transport.respondingtimeouts.idletimeout=600s"
     labels:
       # Enable self‑routing
       - "traefik.enable=true"
