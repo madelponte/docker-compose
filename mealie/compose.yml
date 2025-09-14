@@ -4,11 +4,11 @@ services:
     container_name: mealie
     restart: always
     #ports:
-    #    - "9925:9000" # 
+    #    - "9925:9000"
     deploy:
       resources:
         limits:
-          memory: 1000M # 
+          memory: 1000M
     volumes:
       - /srv/mealie/data:/app/data/
     environment:
@@ -22,6 +22,12 @@ services:
       BASE_URL: https://mealie.local
     networks:
       - proxynet
+    labels:
+      - "traefik.http.routers.mealie.rule=Host(`mealie.home`)" 
+      - "traefik.http.routers.mealie.entrypoints=websecure"
+      - "traefik.http.routers.mealie.tls=true"
+      - "traefik.enable=true"
+      - "traefik.http.middlewares.redirect-middleware.redirectscheme.scheme=https"
 
 networks:
   proxynet:

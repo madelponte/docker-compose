@@ -22,16 +22,20 @@ services:
       - /etc/localtime:/etc/localtime:ro
     env_file:
       - .env
-    #ports:
-    #  - '2283:2283'
+    ports:
+      - '2283:2283'
     depends_on:
       - redis
       - database
     restart: always
     healthcheck:
       disable: false
-    networks:
-      - proxynet
+    labels:
+      - "traefik.http.routers.immich.rule=Host(`immich.home`)" 
+      - "traefik.http.routers.immich.entrypoints=websecure"
+      - "traefik.http.routers.immich.tls=true"
+      - "traefik.enable=true"
+      - "traefik.http.middlewares.redirect-middleware.redirectscheme.scheme=https"
 
   immich-machine-learning:
     container_name: immich_machine_learning
@@ -74,8 +78,3 @@ services:
 
 volumes:
   model-cache:
-
-networks:
-  proxynet:
-    external: true
-    name: proxynet

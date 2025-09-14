@@ -14,3 +14,16 @@ services:
       - PYTORCH_TUNABLEOP_ENABLED=1
     volumes:
       - /opt/comfyui:/root
+    labels:
+      - "traefik.http.routers.comfyui.rule=Host(`comfyui.home`)" 
+      - "traefik.http.routers.comfyui.entrypoints=websecure"
+      - "traefik.http.routers.comfyui.tls=true"
+      - "traefik.enable=true"
+      - "traefik.http.middlewares.redirect-middleware.redirectscheme.scheme=https"
+    networks:
+      - proxynet
+
+networks:
+  proxynet:
+    external: true
+    name: proxynet
