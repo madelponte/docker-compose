@@ -28,12 +28,15 @@ services:
     restart: unless-stopped
     labels:
       - "traefik.http.routers.unifi.rule=Host(`unifi.home`)" 
+      - "traefik.http.services.unifi.loadbalancer.server.port=8443"
       - "traefik.http.routers.unifi.entrypoints=websecure"
       - "traefik.http.routers.unifi.tls=true"
       - "traefik.enable=true"
       - "traefik.http.middlewares.redirect-middleware.redirectscheme.scheme=https"
+      - "traefik.http.services.unifi.loadbalancer.server.scheme=https"
     networks:
       - proxynet
+      - unifi
   unifi-db:
     image: docker.io/mongo:6
     container_name: unifi-db
@@ -42,9 +45,11 @@ services:
       - /srv/unifi/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
     restart: unless-stopped
     networks:
-      - proxynet
+      - unifi
 
 networks:
   proxynet:
     external: true
     name: proxynet
+  unifi:
+    name: unifi

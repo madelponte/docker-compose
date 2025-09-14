@@ -2,20 +2,44 @@ services:
   traefik:
     image: traefik:v3
     restart: unless-stopped
+    security_opt:
+      - no-new-privileges:true
     command:
-      - "--api.insecure=true"
       - "--providers.docker=true"
       - "--entrypoints.web.address=:80"
+      - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
+      - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
+      - "--entrypoints.web.http.redirections.entrypoint.permanent=true"
       - "--entrypoints.websecure.address=:443"
       - "--providers.docker.exposedbydefault=false"
       - "--providers.docker.network=proxynet"
+      - "--serversTransport.insecureSkipVerify=true"
+      - "--entrypoints.websecure.http.tls=true"
+      - "--providers.file.filename=/dynamic/tls.yaml"
+      - "--api.dashboard=true"
+      - "--api.insecure=false"
+    labels:
+      # Enable self‑routing
+      - "traefik.enable=true"
+
+      # Dashboard router
+      - "traefik.http.routers.dashboard.rule=Host(`traefik.home`)"
+      - "traefik.http.routers.dashboard.rule=Host(`traefik2.home`)"
+      - "traefik.http.routers.dashboard.entrypoints=websecure"
+      - "traefik.http.routers.dashboard.service=api@internal"
+      - "traefik.http.routers.dashboard.tls=true"
+
+      # Basic‑auth middleware
+      - "traefik.http.middlewares.dashboard-auth.basicauth.users=mdelponte:$$apr1$$yGtNyFKC$$/STFElTQwnbjxtAtScIlq1"
+      - "traefik.http.routers.dashboard.middlewares=dashboard-auth@docker"
     ports:
       - "80:80"
       - "443:443"
-      - "8080:8080"
+      - "8081:8080"
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /srv/nginx/ssl:/certs:ro
+      - /srv/traefik/certs:/certs:ro
+      - ./dynamic:/dynamic:ro
     networks:
       - proxynet
 
