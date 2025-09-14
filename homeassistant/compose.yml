@@ -8,7 +8,9 @@ services:
       - /run/dbus:/run/dbus:ro
     restart: unless-stopped
     privileged: true
-    network_mode: host
+    networks:
+      - proxynet
+
 networks:
   proxynet:
     external: true
