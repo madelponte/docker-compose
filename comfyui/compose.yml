@@ -13,4 +13,4 @@ services:
       - HIP_VISIBLE_DEVICES=0
       - PYTORCH_TUNABLEOP_ENABLED=1
     volumes:
-      - /srv/comfyui:/root
+      - /opt/comfyui:/root
