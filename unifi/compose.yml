@@ -27,7 +27,7 @@ services:
       - 5514:5514/udp #optional
     restart: unless-stopped
     labels:
-      - "traefik.http.routers.unifi.rule=Host(`unifi.home`)" 
+      - "traefik.http.routers.unifi.rule=Host(`unifi.mdelponte.com`)" 
       - "traefik.http.services.unifi.loadbalancer.server.port=8443"
       - "traefik.http.routers.unifi.entrypoints=websecure"
       - "traefik.http.routers.unifi.tls=true"

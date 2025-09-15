@@ -20,7 +20,7 @@ services:
     devices:
       - /dev/dri/renderD128:/dev/dri/renderD128
     labels:
-      - "traefik.http.routers.jellyfin.rule=Host(`jellyfin.home`)" 
+      - "traefik.http.routers.jellyfin.rule=Host(`jellyfin.mdelponte.com`)" 
       - "traefik.http.routers.jellyfin.entrypoints=websecure"
       - "traefik.http.routers.jellyfin.tls=true"
       - "traefik.enable=true"
