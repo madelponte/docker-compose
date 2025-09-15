@@ -9,7 +9,7 @@ services:
     restart: unless-stopped
     privileged: true
     labels:
-      - "traefik.http.routers.homeassistant.rule=Host(`homeassistant.home`)" 
+      - "traefik.http.routers.homeassistant.rule=Host(`homeassistant.mdelponte.com`)" 
       - "traefik.http.routers.homeassistant.entrypoints=websecure"
       - "traefik.http.routers.homeassistant.tls=true"
       - "traefik.http.services.homeassistant.loadbalancer.server.port=8123"

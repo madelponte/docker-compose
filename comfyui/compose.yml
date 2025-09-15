@@ -15,7 +15,7 @@ services:
     volumes:
       - /opt/comfyui:/root
     labels:
-      - "traefik.http.routers.comfyui.rule=Host(`comfyui.home`)" 
+      - "traefik.http.routers.comfyui.rule=Host(`comfyui.mdelponte.com`)" 
       - "traefik.http.routers.comfyui.entrypoints=websecure"
       - "traefik.http.routers.comfyui.tls=true"
       - "traefik.enable=true"

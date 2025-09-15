@@ -31,7 +31,7 @@ services:
     healthcheck:
       disable: false
     labels:
-      - "traefik.http.routers.immich.rule=Host(`immich.home`)" 
+      - "traefik.http.routers.immich.rule=Host(`immich.mdelponte.com`)" 
       - "traefik.http.routers.immich.entrypoints=websecure"
       - "traefik.http.routers.immich.tls=true"
       - "traefik.enable=true"

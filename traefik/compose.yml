@@ -5,6 +5,9 @@ services:
     restart: unless-stopped
     security_opt:
       - no-new-privileges:true
+    environment:
+      - CF_API_EMAIL=${CF_API_EMAIL}
+      - CF_DNS_API_TOKEN=${CF_DNS_API_TOKEN}
     command:
       - "--providers.docker=true"
       - "--entrypoints.web.address=:80"
@@ -27,8 +30,8 @@ services:
       - "traefik.enable=true"
 
       # Dashboard router
-      - "traefik.http.routers.dashboard.rule=Host(`traefik.home`)"
-      - "traefik.http.routers.dashboard.rule=Host(`traefik2.home`)"
+      - "traefik.http.routers.dashboard.rule=Host(`traefik.mdelponte.com`)"
+      - "traefik.http.routers.dashboard.rule=Host(`traefik2.mdelponte.com`)"
       - "traefik.http.routers.dashboard.entrypoints=websecure"
       - "traefik.http.routers.dashboard.service=api@internal"
       - "traefik.http.routers.dashboard.tls=true"
