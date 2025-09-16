@@ -34,6 +34,7 @@ services:
       - "traefik.http.routers.immich.rule=Host(`immich.mdelponte.com`)" 
       - "traefik.http.routers.immich.entrypoints=websecure"
       - "traefik.http.routers.immich.tls=true"
+      - "traefik.http.routers.immich.tls.certresolver=cloudflare"
       - "traefik.enable=true"
       - "traefik.http.middlewares.redirect-middleware.redirectscheme.scheme=https"
     networks:

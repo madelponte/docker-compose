@@ -33,11 +33,12 @@ services:
       - "net.ipv6.conf.all.disable_ipv6=0"
     labels:
       - "traefik.http.routers.transmission.rule=Host(`transmission.mdelponte.com`)" 
-      - "traefik.http.services.transmission.loadbalancer.server.port=9091"
       - "traefik.http.routers.transmission.entrypoints=websecure"
       - "traefik.http.routers.transmission.tls=true"
+      - "traefik.http.routers.transmission.tls.certresolver=cloudflare"
       - "traefik.enable=true"
       - "traefik.http.middlewares.redirect-middleware.redirectscheme.scheme=https"
+      - "traefik.http.services.transmission.loadbalancer.server.port=9091"
     networks:
       - proxynet
 networks:

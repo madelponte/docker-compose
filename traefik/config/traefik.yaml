@@ -1,0 +1,63 @@
+global:
+  checkNewVersion: false
+  sendAnonymousUsage: false
+
+api:
+  dashboard: true
+  debug: true
+
+entryPoints:
+  web:
+    address: :80
+    http:
+      redirections:
+        entrypoint:
+          to: websecure
+          scheme: https
+
+  websecure:
+    address: :443
+    transport:
+      respondingTimeouts:
+        readTimeout: 600s
+        writeTimeout: 600s
+        idleTimeout: 600s
+    
+serversTransport:
+  insecureSkipVerify: true
+
+http:
+  middlewares:
+    redirect-to-https:
+      redirectScheme:
+        scheme: https
+        permanent: true
+
+certificatesResolvers:
+  cloudflare:
+    acme:
+      email: madelponte@pm.me
+      storage: /letsencrypt/acme.json
+      keyType: EC256
+      dnsChallenge:
+        provider: cloudflare
+        #disablePropagationCheck: true
+        resolvers:
+          - "192.168.2.1:53"
+        propagation:
+          delayBeforeChecks: 90
+
+providers:
+  docker:
+    endpoint: "unix:///var/run/docker.sock"
+    exposedByDefault: false
+    network: proxynet
+  file:
+    directory: /etc/traefik
+    watch: true
+
+log:
+  level: "INFO"
+  filePath: "/var/log/traefik/traefik.log"
+accessLog:
+  filePath: "/var/log/traefik/access.log"

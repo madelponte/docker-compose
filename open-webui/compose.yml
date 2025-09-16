@@ -31,11 +31,13 @@ services:
       - host.docker.internal:host-gateway
     restart: unless-stopped
     labels:
-      - "traefik.http.routers.open-webui.rule=Host(`ai.home`)" 
+      - "traefik.http.routers.open-webui.rule=Host(`ai.mdelponte.com`)" 
       - "traefik.http.routers.open-webui.entrypoints=websecure"
       - "traefik.http.routers.open-webui.tls=true"
+      - "traefik.http.routers.open-webui.tls.certresolver=cloudflare"
       - "traefik.enable=true"
       - "traefik.http.middlewares.redirect-middleware.redirectscheme.scheme=https"
+      - "traefik.http.services.open-webui.loadbalancer.server.port=8080"
     networks:
       - proxynet
 

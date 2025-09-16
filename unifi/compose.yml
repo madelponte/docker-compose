@@ -28,12 +28,12 @@ services:
     restart: unless-stopped
     labels:
       - "traefik.http.routers.unifi.rule=Host(`unifi.mdelponte.com`)" 
-      - "traefik.http.services.unifi.loadbalancer.server.port=8443"
       - "traefik.http.routers.unifi.entrypoints=websecure"
       - "traefik.http.routers.unifi.tls=true"
+      - "traefik.http.routers.unifi.tls.certresolver=cloudflare"
       - "traefik.enable=true"
       - "traefik.http.middlewares.redirect-middleware.redirectscheme.scheme=https"
-      - "traefik.http.services.unifi.loadbalancer.server.scheme=https"
+      - "traefik.http.services.unifi.loadbalancer.server.port=8443"
     networks:
       - proxynet
       - unifi

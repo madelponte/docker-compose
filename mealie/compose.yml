@@ -26,6 +26,7 @@ services:
       - "traefik.http.routers.mealie.rule=Host(`mealie.mdelponte.com`)" 
       - "traefik.http.routers.mealie.entrypoints=websecure"
       - "traefik.http.routers.mealie.tls=true"
+      - "traefik.http.routers.mealie.tls.certresolver=cloudflare"
       - "traefik.enable=true"
       - "traefik.http.middlewares.redirect-middleware.redirectscheme.scheme=https"
 

@@ -18,6 +18,7 @@ services:
       - "traefik.http.routers.comfyui.rule=Host(`comfyui.mdelponte.com`)" 
       - "traefik.http.routers.comfyui.entrypoints=websecure"
       - "traefik.http.routers.comfyui.tls=true"
+      - "traefik.http.routers.comfyui.tls.certresolver=cloudflare"
       - "traefik.enable=true"
       - "traefik.http.middlewares.redirect-middleware.redirectscheme.scheme=https"
     networks:
