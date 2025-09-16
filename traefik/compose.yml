@@ -6,25 +6,8 @@ services:
     security_opt:
       - no-new-privileges:true
     environment:
-      - CF_API_EMAIL=${CF_API_EMAIL}
       - CF_DNS_API_TOKEN=${CF_DNS_API_TOKEN}
-    command:
-      - "--providers.docker=true"
-      - "--entrypoints.web.address=:80"
-      - "--entrypoints.web.http.redirections.entrypoint.to=websecure"
-      - "--entrypoints.web.http.redirections.entrypoint.scheme=https"
-      - "--entrypoints.web.http.redirections.entrypoint.permanent=true"
-      - "--entrypoints.websecure.address=:443"
-      - "--providers.docker.exposedbydefault=false"
-      - "--providers.docker.network=proxynet"
-      - "--serversTransport.insecureSkipVerify=true"
-      - "--entrypoints.websecure.http.tls=true"
-      - "--providers.file.filename=/dynamic/tls.yaml"
-      - "--api.dashboard=true"
-      - "--api.insecure=false"
-      - "--entrypoints.name.transport.respondingtimeouts.readtimeout=600s"
-      - "--entrypoints.name.transport.respondingtimeouts.writetimeout=600s"
-      - "--entrypoints.name.transport.respondingtimeouts.idletimeout=600s"
+      - CF_ZONE_API_TOKEN=${CF_ZONE_API_TOKEN}
     labels:
       # Enable self‑routing
       - "traefik.enable=true"
@@ -35,18 +18,21 @@ services:
       - "traefik.http.routers.dashboard.entrypoints=websecure"
       - "traefik.http.routers.dashboard.service=api@internal"
       - "traefik.http.routers.dashboard.tls=true"
-
+      - "traefik.http.routers.dashboard.tls.certresolver=cloudflare"
+      - "traefik.http.routers.dashboard.tls.domains[0].main=mdelponte.com"
+      - "traefik.http.routers.dashboard.tls.domains[0].sans=*.mdelponte.com"
       # Basic‑auth middleware
       - "traefik.http.middlewares.dashboard-auth.basicauth.users=mdelponte:$$apr1$$yGtNyFKC$$/STFElTQwnbjxtAtScIlq1"
       - "traefik.http.routers.dashboard.middlewares=dashboard-auth@docker"
     ports:
       - "80:80"
       - "443:443"
-      - "8081:8080"
     volumes:
+      - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/var/run/docker.sock
-      - /srv/traefik/certs:/certs:ro
-      - ./dynamic:/dynamic:ro
+      - /srv/traefik/letsencrypt:/letsencrypt
+      - /srv/traefik/logs:/var/log/traefik
+      - ./config:/etc/traefik
     networks:
       - proxynet
 
