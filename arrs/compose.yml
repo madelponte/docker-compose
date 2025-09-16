@@ -222,5 +222,5 @@ networks:
   proxynet:
     external: true
     name: proxynet
-  immich:
+  arrs:
     name: arrs
