@@ -29,6 +29,7 @@ services:
     labels:
       - "traefik.http.routers.unifi.rule=Host(`unifi.mdelponte.com`)" 
       - "traefik.http.routers.unifi.entrypoints=websecure"
+      - "traefik.http.services.unifi.loadbalancer.server.scheme=https"
       - "traefik.http.routers.unifi.tls=true"
       - "traefik.http.routers.unifi.tls.certresolver=cloudflare"
       - "traefik.enable=true"
