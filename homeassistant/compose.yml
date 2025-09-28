@@ -14,7 +14,7 @@ services:
       - "traefik.http.routers.homeassistant.tls=true"
       - "traefik.http.routers.homeassistant.tls.certresolver=cloudflare"
       - "traefik.enable=true"
-      - "traefik.http.middlewares.redirect-middleware.redirectscheme.scheme=https"
+      - "traefik.http.routers.homeassistant.middlewares=http-redirect"
       - "traefik.http.services.homeassistant.loadbalancer.server.port=8123"
     networks:
       - proxynet

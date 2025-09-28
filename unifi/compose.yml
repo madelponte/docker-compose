@@ -33,7 +33,7 @@ services:
       - "traefik.http.routers.unifi.tls=true"
       - "traefik.http.routers.unifi.tls.certresolver=cloudflare"
       - "traefik.enable=true"
-      - "traefik.http.middlewares.redirect-middleware.redirectscheme.scheme=https"
+      - "traefik.http.routers.unifi.middlewares=http-redirect"
       - "traefik.http.services.unifi.loadbalancer.server.port=8443"
     networks:
       - proxynet

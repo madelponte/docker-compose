@@ -20,9 +20,11 @@ services:
       - "traefik.http.routers.dashboard.tls.certresolver=cloudflare"
       - "traefik.http.routers.dashboard.tls.domains[0].main=mdelponte.com"
       - "traefik.http.routers.dashboard.tls.domains[0].sans=*.mdelponte.com"
-      # Basic‑auth middleware
+      # middlewares
       - "traefik.http.middlewares.dashboard-auth.basicauth.users=mdelponte:$$apr1$$yGtNyFKC$$/STFElTQwnbjxtAtScIlq1"
       - "traefik.http.routers.dashboard.middlewares=dashboard-auth@docker"
+      - "traefik.http.middlewares.http-redirect.redirectscheme.scheme=https"
+      - "traefik.http.middlewares.local-whitelist.ipwhitelist.sourcerange=127.0.0.1/32, 192.168.2.0/24"
     ports:
       - "80:80"
       - "443:443"

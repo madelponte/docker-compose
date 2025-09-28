@@ -20,7 +20,7 @@ services:
       - "traefik.http.routers.comfyui.tls=true"
       - "traefik.http.routers.comfyui.tls.certresolver=cloudflare"
       - "traefik.enable=true"
-      - "traefik.http.middlewares.redirect-middleware.redirectscheme.scheme=https"
+      - "traefik.http.routers.comfyui.middlewares=http-redirect"
     networks:
       - proxynet
 
