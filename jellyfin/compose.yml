@@ -26,8 +26,6 @@ services:
       - "traefik.http.routers.jellyfin.tls.certresolver=cloudflare"
       - "traefik.enable=true"
       - "traefik.http.middlewares.redirect-middleware.redirectscheme.scheme=https"
-    networks:
-      - proxynet
 
 networks:
   proxynet:
