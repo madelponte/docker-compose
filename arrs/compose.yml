@@ -17,7 +17,7 @@ services:
       - "traefik.http.routers.jackett.tls=true"
       - "traefik.http.routers.jackett.tls.certresolver=cloudflare"
       - "traefik.enable=true"
-      - "traefik.http.middlewares.redirect-middleware.redirectscheme.scheme=https"
+      - "traefik.http.routers.jackett.middlewares=http-redirect"
     networks:
       - proxynet
       - arrs
@@ -43,7 +43,7 @@ services:
       - "traefik.http.routers.sonarr.tls=true"
       - "traefik.http.routers.sonarr.tls.certresolver=cloudflare"
       - "traefik.enable=true"
-      - "traefik.http.middlewares.redirect-middleware.redirectscheme.scheme=https"
+      - "traefik.http.routers.sonarr.middlewares=http-redirect"
     networks:
       - proxynet
       - arrs
@@ -69,7 +69,7 @@ services:
       - "traefik.http.routers.radarr.tls=true"
       - "traefik.http.routers.radarr.tls.certresolver=cloudflare"
       - "traefik.enable=true"
-      - "traefik.http.middlewares.redirect-middleware.redirectscheme.scheme=https"
+      - "traefik.http.routers.radarr.middlewares=http-redirect"
     networks:
       - proxynet
       - arrs
@@ -94,7 +94,7 @@ services:
   #  - "traefik.http.routers.lidarr.tls=true"
   #  - "traefik.http.routers.lidarr.tls.certresolver=cloudflare"
   #  - "traefik.enable=true"
-  #  - "traefik.http.middlewares.redirect-middleware.redirectscheme.scheme=https"
+  #    - "traefik.http.routers.lidarr.middlewares=http-redirect"
   #  networks:
   #   - proxynet
   #   - arrs
@@ -121,7 +121,7 @@ services:
       - "traefik.http.routers.bazarr.tls=true"
       - "traefik.http.routers.bazarr.tls.certresolver=cloudflare"
       - "traefik.enable=true"
-      - "traefik.http.middlewares.redirect-middleware.redirectscheme.scheme=https"
+      - "traefik.http.routers.bazzarr.middlewares=http-redirect"
     networks:
       - proxynet
       - arrs

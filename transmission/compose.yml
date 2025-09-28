@@ -37,7 +37,7 @@ services:
       - "traefik.http.routers.transmission.tls=true"
       - "traefik.http.routers.transmission.tls.certresolver=cloudflare"
       - "traefik.enable=true"
-      - "traefik.http.middlewares.redirect-middleware.redirectscheme.scheme=https"
+      - "traefik.http.routers.transmission.middlewares=http-redirect"
       - "traefik.http.services.transmission.loadbalancer.server.port=9091"
     networks:
       - proxynet
