@@ -5,8 +5,8 @@ services:
     environment:
       - TZ=America/New_York
       - DARK_MODE=1
-    ports:
-      - "5800:5800"
+    #ports:
+    #  - "5800:5800"
     devices:
       - /dev/kfd:/dev/kfd
       - /dev/dri:/dev/dri
@@ -15,22 +15,38 @@ services:
     volumes:
       - /srv/handbrake/config:/config:rw
       - /mnt/media/output:/output:rw
-      - /root:/storage:ro
+      - /mnt/media:/storage:ro
     restart: unless-stopped
+    labels:
+      - "traefik.http.routers.handbrake.rule=Host(`handbrake.mdelponte.com`)" 
+      - "traefik.http.routers.handbrake.entrypoints=websecure"
+      - "traefik.http.routers.handbrake.tls=true"
+      - "traefik.http.routers.handbrake.tls.certresolver=cloudflare"
+      - "traefik.enable=true"
+      - "traefik.http.routers.handbrake.middlewares=http-redirect"
+      - "traefik.http.services.handbrake.loadbalancer.server.port=5800"
     networks:
       - proxynet
   makemkv:
     image: docker.io/jlesage/makemkv:latest
     container_name: makemkv
-    ports:
-      - 5801:5800
+    #ports:
+    #  - 5801:5800
     devices:
       - /dev/sr0:/dev/sr0
     volumes:
       - /srv/makemkv/config:/config
-      - /root:/storage:ro
+      - /mnt/media:/storage:ro
       - /mnt/media/output:/output
     restart: unless-stopped
+    labels:
+      - "traefik.http.routers.makemkv.rule=Host(`makemkv.mdelponte.com`)" 
+      - "traefik.http.routers.makemkv.entrypoints=websecure"
+      - "traefik.http.routers.makemkv.tls=true"
+      - "traefik.http.routers.makemkv.tls.certresolver=cloudflare"
+      - "traefik.enable=true"
+      - "traefik.http.routers.makemkv.middlewares=http-redirect"
+      - "traefik.http.services.makemkv.loadbalancer.server.port=5800"
     networks:
       - proxynet
 networks:
