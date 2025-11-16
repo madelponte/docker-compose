@@ -8,7 +8,10 @@ services:
     ports:
       - "5800:5800"
     devices:
+      - /dev/kfd:/dev/kfd
       - /dev/dri:/dev/dri
+    group_add:
+      - video
     volumes:
       - /srv/handbrake/config:/config:rw
       - /mnt/media/output:/output:rw
