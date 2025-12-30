@@ -1,0 +1,23 @@
+services:
+  bentopdf:
+    image: ghcr.io/alam00000/bentopdf:latest
+    container_name: bentopdf
+    networks:
+      - proxynet
+    #ports:
+    #  - "3000:8080"
+    restart: unless-stopped
+    labels:
+      - "traefik.http.routers.bentopdf.rule=Host(`pdf.mdelponte.com`)" 
+      - "traefik.http.routers.bentopdf.entrypoints=websecure"
+      - "traefik.http.routers.bentopdf.tls=true"
+      - "traefik.http.routers.bentopdf.tls.certresolver=cloudflare"
+      - "traefik.enable=true"
+      - "traefik.http.middlewares.http-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.bentopdf.middlewares=http-redirect"
+      - "traefik.http.services.bentopdf.loadbalancer.server.port=8080"
+
+networks:
+  proxynet:
+    external: true
+    name: proxynet
