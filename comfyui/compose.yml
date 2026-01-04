@@ -1,6 +1,6 @@
 services:
   comfyui:
-    image: docker.io/yanwk/comfyui-boot:rocm 
+    image: docker.io/yanwk/comfyui-boot:rocm7
     container_name: comfyui
     devices:
       - /dev/kfd:/dev/kfd
