@@ -2,18 +2,31 @@ services:
   comfyui:
     image: docker.io/yanwk/comfyui-boot:rocm7
     container_name: comfyui
+    security_opt:
+      - seccomp=unconfined
+      - label=disable
     devices:
       - /dev/kfd:/dev/kfd
       - /dev/dri:/dev/dri
+    ipc: host
+    cap_add:
+      - SYS_PTRACE
     group_add:
       - video
-    ports:
-      - "8188:8188"
+    #ports:
+    #  - "8188:8188"
     environment:
       - HIP_VISIBLE_DEVICES=0
-      - PYTORCH_TUNABLEOP_ENABLED=1
+      - HSA_OVERRIDE_GFX_VERSION=11.5.1
+      - HSA_DISABLE_FRAGMENT_ALLOCATOR=1
     volumes:
-      - /opt/comfyui:/root
+      - /srv/comfyui/storage:/root
+      - /opt/comfyui/storage-models/models:/root/ComfyUI/models
+      - /opt/comfyui/storage-models/hf-hub:/root/.cache/huggingface/hub
+      - /opt/comfyui/storage-models/torch-hub:/root/.cache/torch/hub
+      - /srv/comfyui/storage-user/input:/root/ComfyUI/input
+      - /srv/comfyui/storage-user/output:/root/ComfyUI/output
+      - /srv/comfyui/storage-user/workflows:/root/ComfyUI/user/default/workflows
     labels:
       - "traefik.http.routers.comfyui.rule=Host(`comfyui.mdelponte.com`)" 
       - "traefik.http.routers.comfyui.entrypoints=websecure"
