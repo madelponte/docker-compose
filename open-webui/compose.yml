@@ -21,7 +21,6 @@ services:
     container_name: open-webui
     volumes:
       - /srv/open-webui:/app/backend/data
-      - openwebui-cache:/app/backend/data/cache
     depends_on:
       - llama-swap
     #ports:
@@ -41,8 +40,6 @@ services:
       - "traefik.http.services.open-webui.loadbalancer.server.port=8080"
     networks:
       - proxynet
-volumes:
-  openwebui-cache:
 
 networks:
   proxynet:
