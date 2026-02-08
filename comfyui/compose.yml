@@ -34,8 +34,7 @@ services:
       - "traefik.http.routers.comfyui.tls.certresolver=cloudflare"
       - "traefik.enable=true"
       - "traefik.http.middlewares.comfyui-auth.basicauth.users=mdelponte:$$apr1$$yGtNyFKC$$/STFElTQwnbjxtAtScIlq1"
-      - "traefik.http.routers.comfyui.middlewares=comfyui-auth@docker"
-      - "traefik.http.routers.comfyui.middlewares=http-redirect"
+      - "traefik.http.routers.comfyui.middlewares=comfyui-auth@docker,http-redirect"
     networks:
       - proxynet
 
