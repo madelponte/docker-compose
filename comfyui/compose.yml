@@ -35,6 +35,7 @@ services:
       - "traefik.enable=true"
       - "traefik.http.middlewares.comfyui-auth.basicauth.users=mdelponte:$$apr1$$yGtNyFKC$$/STFElTQwnbjxtAtScIlq1"
       - "traefik.http.routers.comfyui.middlewares=comfyui-auth@docker,http-redirect"
+    restart: unless-stopped
     networks:
       - proxynet
 
