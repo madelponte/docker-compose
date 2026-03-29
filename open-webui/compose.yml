@@ -14,7 +14,7 @@ services:
       - /opt/models:/models
       - /srv/llama-swap/config.yaml:/app/config.yaml
     networks:
-      - proxynet
+      - ainet
 
   open-webui:
     image: ghcr.io/open-webui/open-webui:${WEBUI_DOCKER_TAG-main}
@@ -40,8 +40,23 @@ services:
       - "traefik.http.services.open-webui.loadbalancer.server.port=8080"
     networks:
       - proxynet
+      - ainet
+
+flaresolverr:
+  image: ghcr.io/flaresolverr/flaresolverr:latest
+  container_name: flaresolverr
+  environment:
+    - LOG_LEVEL=${LOG_LEVEL:-info}
+    - LOG_HTML=${LOG_HTML:-false}
+    - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
+    - TZ=America/New_York
+  restart: unless-stopped
+  networks:
+    - ainet
 
 networks:
   proxynet:
     external: true
     name: proxynet
+  ainet:
+    name: ainet
