@@ -42,6 +42,31 @@ services:
       - proxynet
       - ainet
 
+#  open-terminal:
+#    image: ghcr.io/open-webui/open-terminal:latest
+#    container_name: open-terminal
+#    environment:
+#      - 'OPEN_TERMINAL_API_KEY=${OPEN_TERMINAL_API_KEY}'
+#    # ports:
+#    #   - 8000:8000
+#    volumes:
+#      - open-terminal:/home/user
+#    networks:
+#      - ainet
+
+  genfiles-mcp:
+    image: ghcr.io/baronco/genfilesmcp:latest
+    container_name: gen_files_mcp
+    # ports:
+    #   - 8016:8016
+    environment:
+      - REVIEWER_AI_ASSISTANT_NAME=GenFilesMCP
+      - ENABLE_CREATE_KNOWLEDGE=false
+      - OWUI_URL=http://open-webui:8080
+      - PORT=8016
+    networks:
+      - ainet
+
   flaresolverr:
     image: ghcr.io/flaresolverr/flaresolverr:latest
     container_name: flaresolverr
@@ -53,6 +78,9 @@ services:
     restart: unless-stopped
     networks:
       - ainet
+
+# volumes:
+#   open-terminal:
 
 networks:
   proxynet:
