@@ -26,7 +26,7 @@ services:
           max-size: 10m
     #ports:
     #  - 9091:9091
-    image: docker.io/haugene/transmission-openvpn:edge
+    image: docker.io/haugene/transmission-openvpn:latest
     container_name: transmission
     restart: unless-stopped
     sysctls:
