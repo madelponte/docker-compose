@@ -1,0 +1,47 @@
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: prometheus
+    restart: unless-stopped
+    #ports:
+    #  - "9090:9090"
+    volumes:
+      - /srv/prometheus/config:/etc/prometheus
+      - /srv/prometheus/data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+      - '--web.enable-lifecycle'
+    networks:
+      - monitoring
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    volumes:
+      - /srv/grafana/data:/var/lib/grafana
+    depends_on:
+      - prometheus
+    labels:
+      - "traefik.http.routers.grafana.rule=Host(`grafana.mdelponte.com`)" 
+      - "traefik.http.routers.grafana.entrypoints=websecure"
+      - "traefik.http.routers.grafana.tls=true"
+      - "traefik.http.routers.grafana.tls.certresolver=cloudflare"
+      - "traefik.enable=true"
+      - "traefik.http.routers.grafana.middlewares=http-redirect"
+      - "traefik.http.services.grafana.loadbalancer.server.port=3000"
+    networks:
+      - proxynet
+      - monitoring
+
+networks:
+  proxynet:
+    external: true
+    name: proxynet
+  monitoring:
+    name: monitoring
