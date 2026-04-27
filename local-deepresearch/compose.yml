@@ -3,7 +3,7 @@ services:
     image: localdeepresearch/local-deep-research:latest
     networks:
       - ainet
-      -proxynet
+      - proxynet
     ports:
       - "5000:5000"
     labels:
@@ -104,7 +104,7 @@ services:
       # - LDR_LLM_LMSTUDIO_URL=http://host.docker.internal:1234
       # - LDR_LLM_MODEL=<your-loaded-model-name>
     volumes:
-      - ldr_data:/data
+      - /srv/local-deepresearch:/data
       - ldr_scripts:/scripts
       # ============================================================================
       # NOTE: Do NOT add resource limits (deploy.resources.limits) here.
@@ -150,7 +150,6 @@ services:
     restart: unless-stopped
 
 volumes:
-  ldr_data:
   ldr_scripts:
 networks:
   ainet:
