@@ -1,6 +1,7 @@
 services:
-  local-deep-research:
+  deepresearch:
     image: localdeepresearch/local-deep-research:latest
+    container_name: deepresearch
     networks:
       - ainet
       - proxynet
