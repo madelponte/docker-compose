@@ -60,6 +60,8 @@ services:
     #ports:
     #  - "9998:9998"
     restart: unless-stopped
+    networks:
+      - ainet
 
   flaresolverr:
     image: ghcr.io/flaresolverr/flaresolverr:latest
