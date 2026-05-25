@@ -54,6 +54,13 @@ services:
     networks:
       - ainet
 
+  tika:
+    image: apache/tika:latest-full
+    container_name: tika
+    #ports:
+    #  - "9998:9998"
+    restart: unless-stopped
+
   flaresolverr:
     image: ghcr.io/flaresolverr/flaresolverr:latest
     container_name: flaresolverr
