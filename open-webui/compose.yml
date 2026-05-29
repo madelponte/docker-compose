@@ -54,6 +54,27 @@ services:
     networks:
       - ainet
 
+  mcp-server:
+    image: ghcr.io/madelponte/mcp-server:latest
+    container_name: mcp-tools
+    restart: unless-stopped
+    env_file:
+      - .env
+    #ports:
+    #  - "8000:8000"
+    labels:
+      - "traefik.http.routers.mcp.rule=Host(`mcp.mdelponte.com`)" 
+      - "traefik.http.routers.mcp.entrypoints=websecure"
+      - "traefik.http.routers.mcp.tls=true"
+      - "traefik.http.routers.mcp.tls.certresolver=cloudflare"
+      - "traefik.enable=true"
+      - "traefik.http.middlewares.http-redirect.redirectscheme.scheme=https"
+      - "traefik.http.routers.mcp.middlewares=http-redirect"
+      - "traefik.http.services.mcp.loadbalancer.server.port=8000"
+    networks:
+      - ainet
+      - proxynet
+
   tika:
     image: apache/tika:latest-full
     container_name: tika
