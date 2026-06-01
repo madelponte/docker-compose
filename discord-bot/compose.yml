@@ -4,3 +4,10 @@ discord-bot:
     restart: unless-stopped
     env_file:
       - .env
+    networks:
+      - ainet
+
+networks:
+  ainet:
+    external: true
+    name: ainet
