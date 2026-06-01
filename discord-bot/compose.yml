@@ -1,4 +1,5 @@
-discord-bot:
+services:
+  discord-bot:
     container_name: discord-bot
     image: ghcr.io/madelponte/discord-bot:latest
     restart: unless-stopped
