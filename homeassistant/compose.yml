@@ -2,6 +2,8 @@ services:
   homeassistant:
     container_name: homeassistant
     image: "ghcr.io/home-assistant/home-assistant:stable"
+    devices:
+      - /dev/ttyACM0:/dev/ttyACM0
     volumes:
       - /srv/homeassistant:/config
       - /etc/localtime:/etc/localtime:ro
