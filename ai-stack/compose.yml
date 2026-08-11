@@ -42,18 +42,6 @@ services:
       - proxynet
       - ainet
 
-  open-terminal:
-    image: ghcr.io/open-webui/open-terminal:latest
-    container_name: open-terminal
-    environment:
-      - 'OPEN_TERMINAL_API_KEY=${OPEN_TERMINAL_API_KEY}'
-    # ports:
-    #   - 8000:8000
-    volumes:
-      - open-terminal:/home/user
-    networks:
-      - ainet
-
   mcp-server:
     image: ghcr.io/madelponte/mcp-server:latest
     container_name: mcp-tools
@@ -95,9 +83,6 @@ services:
     restart: unless-stopped
     networks:
       - ainet
-
-volumes:
-  open-terminal:
 
 networks:
   proxynet:
