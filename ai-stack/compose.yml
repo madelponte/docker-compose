@@ -3,6 +3,8 @@ services:
     image: ghcr.io/mostlygeek/llama-swap:vulkan
     container_name: llama-swap
     restart: unless-stopped
+    environment:
+      - 'LLAMA_SWAP_API_KEY=${LLAMA_SWAP_API_KEY}'
     security_opt:
       - seccomp:unconfined
     devices:
