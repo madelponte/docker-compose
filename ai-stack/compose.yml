@@ -7,6 +7,13 @@ services:
       - 'LLAMA_SWAP_API_KEY=${LLAMA_SWAP_API_KEY}'
     security_opt:
       - seccomp:unconfined
+    labels:
+      - "traefik.http.routers.llama-swap.rule=Host(`api.ai.mdelponte.com`)" 
+      - "traefik.http.routers.llama-swap.entrypoints=websecure"
+      - "traefik.http.routers.llama-swap.tls=true"
+      - "traefik.http.routers.llama-swap.tls.certresolver=cloudflare"
+      - "traefik.enable=true"
+      - "traefik.http.services.llama-swap.loadbalancer.server.port=8080"
     devices:
       - /dev/kfd:/dev/kfd
       - /dev/dri:/dev/dri
@@ -17,6 +24,7 @@ services:
       - /srv/llama-swap/config.yaml:/app/config.yaml
     networks:
       - ainet
+      - proxynet
 
   open-webui:
     image: ghcr.io/open-webui/open-webui:${WEBUI_DOCKER_TAG-main}
