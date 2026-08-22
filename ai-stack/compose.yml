@@ -36,7 +36,13 @@ services:
     #ports:
     #  - ${OPEN_WEBUI_PORT-3000}:8080
     environment:
-      - 'WEBUI_SECRET_KEY='
+      # Keep this value stable across container recreations so existing JWTs
+      # and encrypted OAuth/MCP credentials remain valid.
+      WEBUI_SECRET_KEY: "${WEBUI_SECRET_KEY:?WEBUI_SECRET_KEY must be set}"
+      WEBUI_URL: "${WEBUI_URL:-https://ai.mdelponte.com}"
+      WEBUI_SESSION_COOKIE_SECURE: "true"
+      WEBUI_AUTH_COOKIE_SECURE: "true"
+      JWT_EXPIRES_IN: "${WEBUI_JWT_EXPIRES_IN:-4w}"
     extra_hosts:
       - host.docker.internal:host-gateway
     restart: unless-stopped
