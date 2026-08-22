@@ -1,8 +1,12 @@
 services:
   traefik:
-    image: traefik:v3
+    image: dhi.io/traefik:3
     container_name: traefik
     restart: unless-stopped
+    group_add:
+      # The hardened image runs as UID/GID 65532 and needs the host Docker
+      # socket's numeric group ID to use the Docker provider.
+      - "${DOCKER_GID:?DOCKER_GID must be set}"
     security_opt:
       - no-new-privileges:true
     environment:
@@ -30,10 +34,10 @@ services:
       - "443:443"
     volumes:
       - /etc/localtime:/etc/localtime:ro
-      - /var/run/docker.sock:/var/run/docker.sock
+      - /var/run/docker.sock:/var/run/docker.sock:ro
       - /srv/traefik/letsencrypt:/letsencrypt
       - /srv/traefik/logs:/var/log/traefik
-      - ./config:/etc/traefik
+      - ./config:/etc/traefik:ro
     networks:
       - proxynet
 
