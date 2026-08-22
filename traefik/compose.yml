@@ -44,4 +44,4 @@ services:
 networks:
   proxynet:
     name: proxynet
-    driver: bridge
+    external: true
