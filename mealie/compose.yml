@@ -19,7 +19,8 @@ services:
       TZ: America/New_York
       MAX_WORKERS: 1
       WEB_CONCURRENCY: 1
-      BASE_URL: https://mealie.local
+      BASE_URL: "${MEALIE_BASE_URL:-https://mealie.mdelponte.com}"
+      TOKEN_TIME: "${MEALIE_TOKEN_TIME:-720}"
     networks:
       - proxynet
     labels:
