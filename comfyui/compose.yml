@@ -34,7 +34,6 @@ services:
       - "traefik.http.routers.comfyui.tls.certresolver=cloudflare"
       - "traefik.enable=true"
       - "traefik.http.routers.comfyui.middlewares=homelab-auth@docker"
-      - "traefik.http.routers.comfyui.middlewares=comfyui-auth@docker,http-redirect"
     restart: unless-stopped
     networks:
       - proxynet

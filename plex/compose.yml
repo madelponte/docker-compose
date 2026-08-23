@@ -3,6 +3,8 @@ services:
     image: docker.io/plexinc/pms-docker:latest
     container_name: plex
     hostname: plex
+    security_opt:
+      - no-new-privileges:true
     ports:
       - "192.168.2.27:32400:32400/tcp" # Plex Media Server (required and remote access)
       #- "192.168.2.27:8324:8324/tcp"   # Plex Companion

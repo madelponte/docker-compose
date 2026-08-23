@@ -1,8 +1,10 @@
 services:
   factorio:
     image: docker.io/factoriotools/factorio:stable
+    security_opt:
+      - no-new-privileges:true
     ports:
-      - "34197:34197/udp"
+      - "192.168.2.27:34197:34197/udp"
     volumes:
      - /srv/factorio/data:/factorio
      - /srv/factorio/server-settings.json:/factorio/config/server-settings.json

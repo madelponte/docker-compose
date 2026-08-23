@@ -2,6 +2,8 @@ services:
   duckdns:
     image: lscr.io/linuxserver/duckdns:latest
     container_name: duckdns
+    security_opt:
+      - no-new-privileges:true
     environment:
       - PUID=1000 #optional
       - PGID=1000 #optional

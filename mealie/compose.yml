@@ -2,6 +2,8 @@ services:
   mealie:
     image: ghcr.io/mealie-recipes/mealie:latest
     container_name: mealie
+    security_opt:
+      - no-new-privileges:true
     restart: always
     #ports:
     #    - "9925:9000"
@@ -30,7 +32,6 @@ services:
       - "traefik.http.routers.mealie.tls=true"
       - "traefik.http.routers.mealie.tls.certresolver=cloudflare"
       - "traefik.enable=true"
-      - "traefik.http.middlewares.http-redirect.redirectscheme.scheme=https"
       - "traefik.http.routers.mealie.middlewares=http-redirect"
 
 networks:

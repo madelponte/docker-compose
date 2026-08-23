@@ -2,8 +2,10 @@ services:
   minecraft:
     image: docker.io/itzg/minecraft-server:latest
     container_name: minecraft
+    security_opt:
+      - no-new-privileges:true
     ports:
-      - "25565:25565"
+      - "192.168.2.27:25565:25565"
     volumes:
       - "/srv/minecraft:/data"
     environment:

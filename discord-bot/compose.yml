@@ -2,6 +2,8 @@ services:
   discord-bot:
     container_name: discord-bot
     image: ghcr.io/madelponte/discord-bot:latest
+    security_opt:
+      - no-new-privileges:true
     restart: unless-stopped
     env_file:
       - .env

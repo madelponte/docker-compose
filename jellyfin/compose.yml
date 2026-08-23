@@ -4,6 +4,8 @@ services:
     container_name: jellyfin
     group_add:
       - "105"
+    security_opt:
+      - no-new-privileges:true
     #ports:
     #  - "1900:1900"
     #  - "7359:7359"
@@ -25,7 +27,6 @@ services:
       - "traefik.http.routers.jellyfin.tls=true"
       - "traefik.http.routers.jellyfin.tls.certresolver=cloudflare"
       - "traefik.enable=true"
-      - "traefik.http.middlewares.http-redirect.redirectscheme.scheme=https"
       - "traefik.http.routers.jellyfin.middlewares=http-redirect"
       - "traefik.http.services.jellyfin.loadbalancer.server.port=8096"
 

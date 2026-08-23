@@ -2,6 +2,8 @@ services:
   unifi-network-application:
     image: lscr.io/linuxserver/unifi-network-application:latest
     container_name: unifi
+    security_opt:
+      - no-new-privileges:true
     environment:
       - PUID=1000
       - PGID=1000
@@ -17,14 +19,14 @@ services:
       - /srv/unifi/config:/config
     ports:
       #- 8443:8443
-      - 3478:3478/udp
-      - 10001:10001/udp
-      - 8080:8080
-      - 1900:1900/udp #optional
+      - 192.168.2.27:3478:3478/udp
+      - 192.168.2.27:10001:10001/udp
+      - 192.168.2.27:8080:8080
+      - 192.168.2.27:1900:1900/udp #optional
       #- 8843:8843 #optional
       #- 8880:8880 #optional
       #- 6789:6789 #optional
-      - 5514:5514/udp #optional
+      - 192.168.2.27:5514:5514/udp #optional
     restart: unless-stopped
     labels:
       - "traefik.http.routers.unifi.rule=Host(`unifi.mdelponte.com`)" 
@@ -42,6 +44,8 @@ services:
   unifi-db:
     image: docker.io/mongo:6
     container_name: unifi-db
+    security_opt:
+      - no-new-privileges:true
     volumes:
       - /srv/unifi/db:/data/db
       - /srv/unifi/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro

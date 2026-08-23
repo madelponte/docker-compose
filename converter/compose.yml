@@ -2,6 +2,8 @@ services:
   handbrake:
     image: docker.io/jlesage/handbrake:latest
     container_name: handbrake
+    security_opt:
+      - no-new-privileges:true
     environment:
       - TZ=America/New_York
       - DARK_MODE=1
@@ -30,6 +32,8 @@ services:
   makemkv:
     image: docker.io/jlesage/makemkv:latest
     container_name: makemkv
+    security_opt:
+      - no-new-privileges:true
     #ports:
     #  - 5801:5800
     devices:

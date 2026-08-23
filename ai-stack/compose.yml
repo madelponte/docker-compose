@@ -7,6 +7,7 @@ services:
       - 'LLAMA_SWAP_API_KEY=${LLAMA_SWAP_API_KEY}'
     security_opt:
       - seccomp:unconfined
+      - no-new-privileges:true
     labels:
       - "traefik.http.routers.llama-swap.rule=Host(`api.ai.mdelponte.com`)" 
       - "traefik.http.routers.llama-swap.entrypoints=websecure"
@@ -29,6 +30,8 @@ services:
   open-webui:
     image: ghcr.io/open-webui/open-webui:${WEBUI_DOCKER_TAG-main}
     container_name: open-webui
+    security_opt:
+      - no-new-privileges:true
     volumes:
       - /srv/open-webui:/app/backend/data
     depends_on:
@@ -62,6 +65,8 @@ services:
   mcp-server:
     image: ghcr.io/madelponte/mcp-server:latest
     container_name: mcp-tools
+    security_opt:
+      - no-new-privileges:true
     restart: unless-stopped
     env_file:
       - .env
@@ -73,7 +78,6 @@ services:
       - "traefik.http.routers.mcp.tls=true"
       - "traefik.http.routers.mcp.tls.certresolver=cloudflare"
       - "traefik.enable=true"
-      - "traefik.http.middlewares.http-redirect.redirectscheme.scheme=https"
       - "traefik.http.routers.mcp.middlewares=http-redirect"
       - "traefik.http.services.mcp.loadbalancer.server.port=8000"
     networks:
@@ -83,6 +87,8 @@ services:
   tika:
     image: apache/tika:latest-full
     container_name: tika
+    security_opt:
+      - no-new-privileges:true
     #ports:
     #  - "9998:9998"
     restart: unless-stopped
@@ -92,6 +98,8 @@ services:
   flaresolverr:
     image: ghcr.io/flaresolverr/flaresolverr:latest
     container_name: flaresolverr
+    security_opt:
+      - no-new-privileges:true
     environment:
       - LOG_LEVEL=${LOG_LEVEL:-info}
       - LOG_HTML=${LOG_HTML:-false}
