@@ -33,7 +33,7 @@ services:
       - "traefik.http.routers.comfyui.tls=true"
       - "traefik.http.routers.comfyui.tls.certresolver=cloudflare"
       - "traefik.enable=true"
-      - "traefik.http.middlewares.comfyui-auth.basicauth.users=mdelponte:$$apr1$$yGtNyFKC$$/STFElTQwnbjxtAtScIlq1"
+      - "traefik.http.middlewares.comfyui-auth.basicauth.users=mdelponte:$2y$12$7QD8Ld/VzqTzo9jR6GLyOukchQk8OU7XJIXJdI1tRrzHXfOjY4LUi"
       - "traefik.http.routers.comfyui.middlewares=comfyui-auth@docker,http-redirect"
     restart: unless-stopped
     networks:
