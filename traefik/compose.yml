@@ -30,8 +30,8 @@ services:
     security_opt:
       - no-new-privileges:true
     environment:
-      - CF_DNS_API_TOKEN=${CF_DNS_API_TOKEN}
-      - CF_ZONE_API_TOKEN=${CF_ZONE_API_TOKEN}
+      CF_DNS_API_TOKEN_FILE: /run/secrets/cf_dns_api_token
+      CF_ZONE_API_TOKEN_FILE: /run/secrets/cf_zone_api_token
     labels:
       # Enable self‑routing
       - "traefik.enable=true"
@@ -45,8 +45,8 @@ services:
       - "traefik.http.routers.dashboard.tls.domains[0].main=mdelponte.com"
       - "traefik.http.routers.dashboard.tls.domains[0].sans=*.mdelponte.com"
       # middlewares
-      - "traefik.http.middlewares.dashboard-auth.basicauth.users=mdelponte:REDACTED_BCRYPT_HASH"
-      - "traefik.http.routers.dashboard.middlewares=dashboard-auth@docker"
+      - "traefik.http.middlewares.homelab-auth.basicauth.usersfile=/run/secrets/basic_auth_users"
+      - "traefik.http.routers.dashboard.middlewares=homelab-auth@docker"
       - "traefik.http.middlewares.http-redirect.redirectscheme.scheme=https"
       - "traefik.http.middlewares.local-whitelist.ipwhitelist.sourcerange=127.0.0.1/32, 192.168.2.0/24"
     ports:
@@ -57,6 +57,10 @@ services:
       - /srv/traefik/letsencrypt:/letsencrypt
       - /srv/traefik/logs:/var/log/traefik
       - ./config:/etc/traefik:ro
+    secrets:
+      - cf_dns_api_token
+      - cf_zone_api_token
+      - basic_auth_users
     networks:
       - proxynet
       - docker-api
@@ -67,3 +71,11 @@ networks:
     external: true
   docker-api:
     internal: true
+
+secrets:
+  basic_auth_users:
+    file: /srv/traefik/secrets/basic_auth_users
+  cf_dns_api_token:
+    file: /srv/traefik/secrets/cf_dns_api_token
+  cf_zone_api_token:
+    file: /srv/traefik/secrets/cf_zone_api_token
