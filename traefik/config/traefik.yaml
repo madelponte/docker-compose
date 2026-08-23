@@ -22,16 +22,6 @@ entryPoints:
         readTimeout: 600s
         writeTimeout: 600s
         idleTimeout: 600s
-    
-serversTransport:
-  insecureSkipVerify: true
-
-http:
-  middlewares:
-    redirect-to-https:
-      redirectScheme:
-        scheme: https
-        permanent: true
 
 certificatesResolvers:
   cloudflare:
@@ -53,7 +43,7 @@ providers:
     exposedByDefault: false
     network: proxynet
   file:
-    directory: /etc/traefik
+    directory: /etc/traefik/dynamic
     watch: true
 
 log:

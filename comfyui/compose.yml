@@ -33,7 +33,7 @@ services:
       - "traefik.http.routers.comfyui.tls=true"
       - "traefik.http.routers.comfyui.tls.certresolver=cloudflare"
       - "traefik.enable=true"
-      - "traefik.http.middlewares.comfyui-auth.basicauth.users=mdelponte:REDACTED_BCRYPT_HASH"
+      - "traefik.http.routers.comfyui.middlewares=homelab-auth@docker"
       - "traefik.http.routers.comfyui.middlewares=comfyui-auth@docker,http-redirect"
     restart: unless-stopped
     networks:
