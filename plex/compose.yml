@@ -2,10 +2,19 @@ services:
   plex:
     image: docker.io/plexinc/pms-docker:latest
     container_name: plex
-    network_mode: host
+    hostname: plex
+    ports:
+      - "192.168.2.27:32400:32400/tcp" # Plex Media Server (required and remote access)
+      #- "192.168.2.27:8324:8324/tcp"   # Plex Companion
+      #- "192.168.2.27:32469:32469/tcp" # DLNA
+      #- "192.168.2.27:1900:1900/udp"   # DLNA discovery
+      #- "192.168.2.27:32410:32410/udp" # GDM discovery
+      #- "192.168.2.27:32412:32412/udp" # GDM discovery
+      #- "192.168.2.27:32413:32413/udp" # GDM discovery
+      #- "192.168.2.27:32414:32414/udp" # GDM discovery
     environment:
       - TZ=America/New_York
-      - ALLOWED_NETWORKS=192.168.2.0/24
+      - ADVERTISE_IP=http://192.168.2.27:32400/
     devices:
       - /dev/dri:/dev/dri
     volumes:

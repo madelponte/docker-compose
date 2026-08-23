@@ -1,0 +1,6 @@
+http:
+  serversTransports:
+    unifi-insecure:
+      # The UniFi application uses a self-signed certificate on port 8443.
+      # Limit the verification bypass to this backend instead of all HTTPS services.
+      insecureSkipVerify: true

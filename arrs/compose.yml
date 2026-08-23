@@ -177,6 +177,7 @@ services:
     restart: unless-stopped
     networks:
       - arrs
+      - proxynet
 
   #nzbget:
   #  image: lscr.io/linuxserver/nzbget:latest

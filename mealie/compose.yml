@@ -21,6 +21,7 @@ services:
       WEB_CONCURRENCY: 1
       BASE_URL: "${MEALIE_BASE_URL:-https://mealie.mdelponte.com}"
       TOKEN_TIME: "${MEALIE_TOKEN_TIME:-720}"
+      SCRAPER_FLARESOLVERR_URL: "http://flaresolverr:8191"
     networks:
       - proxynet
     labels:
