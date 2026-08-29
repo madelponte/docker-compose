@@ -1,6 +1,6 @@
 services:
   llama-swap:
-    image: ghcr.io/mostlygeek/llama-swap:vulkan
+    image: ghcr.io/mostlygeek/llama-swap:unified-vulkan
     container_name: llama-swap
     restart: unless-stopped
     environment:
@@ -22,7 +22,7 @@ services:
       - video
     volumes:
       - /opt/models:/models
-      - /srv/llama-swap/config.yaml:/app/config.yaml
+      - /srv/llama-swap/config.yaml:/etc/llama-swap/config/config.yaml:ro
     networks:
       - ainet
       - proxynet
