@@ -4,6 +4,8 @@ services:
       - NET_ADMIN
     devices:
       - /dev/net/tun
+    security_opt:
+      - no-new-privileges:true
     volumes:
       - '/mnt/media/downloads:/data/completed'
       - '/srv/transmission/config:/config'
@@ -37,7 +39,7 @@ services:
       - "traefik.http.routers.transmission.tls=true"
       - "traefik.http.routers.transmission.tls.certresolver=cloudflare"
       - "traefik.enable=true"
-      - "traefik.http.routers.transmission.middlewares=http-redirect"
+      - "traefik.http.routers.transmission.middlewares=lan-only@file"
       - "traefik.http.services.transmission.loadbalancer.server.port=9091"
     networks:
       - proxynet

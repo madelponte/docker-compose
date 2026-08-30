@@ -15,7 +15,7 @@ services:
       - "traefik.http.routers.bentopdf.tls=true"
       - "traefik.http.routers.bentopdf.tls.certresolver=cloudflare"
       - "traefik.enable=true"
-      - "traefik.http.routers.bentopdf.middlewares=http-redirect"
+      - "traefik.http.routers.bentopdf.middlewares=lan-only@file"
       - "traefik.http.services.bentopdf.loadbalancer.server.port=8080"
 
 networks:

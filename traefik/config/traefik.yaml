@@ -10,6 +10,9 @@ entryPoints:
   web:
     address: :80
     http:
+      # Drop non-standard aliasing header names (for example X_Auth_User)
+      # before backends can normalize them into trusted canonical headers.
+      aliasHeadersStrategy: delete
       redirections:
         entrypoint:
           to: websecure
@@ -17,6 +20,8 @@ entryPoints:
 
   websecure:
     address: :443
+    http:
+      aliasHeadersStrategy: delete
     transport:
       respondingTimeouts:
         readTimeout: 600s
