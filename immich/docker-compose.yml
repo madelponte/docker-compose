@@ -38,7 +38,7 @@ services:
       - "traefik.http.routers.immich.tls=true"
       - "traefik.http.routers.immich.tls.certresolver=cloudflare"
       - "traefik.enable=true"
-      - "traefik.http.routers.immich.middlewares=http-redirect"
+      - "traefik.http.routers.immich.middlewares=lan-only@file"
     networks:
       - proxynet
       - immich

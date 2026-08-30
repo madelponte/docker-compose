@@ -1,0 +1,23 @@
+# Global middlewares shared by every compose project (referenced as <name>@file).
+# This directory is watched by Traefik, so edits hot-reload without a restart.
+http:
+  middlewares:
+    # Requests must come from somewhere that is already authenticated at the
+    # network layer: the LAN, or a WireGuard peer (the tunnel is the only thing
+    # that can reach this host from outside). This is defence-in-depth against
+    # accidental exposure - a Cloudflare record accidentally orange-clouded, a
+    # UPnP/CGNAT port mapping opened by some other device, a future "quick"
+    # port-forward. It does NOT protect against other devices on your LAN.
+    lan-only:
+      ipAllowList:
+        sourceRange:
+          - "127.0.0.1/32"
+          - "192.168.2.0/24" # LAN
+          # This works only when the VPN router preserves peer source addresses,
+          # as with host-networked WireGuard or the planned OPNsense migration.
+          # Bridged/MASQUERADE WireGuard traffic appears as a Docker gateway.
+          - "10.13.13.0/24" # WireGuard pool
+          # - "172.16.0.0/12"  # DON'T: this would let any container whitelist itself
+
+    # Add other VLANs / trusted subnets here if you have them, e.g.:
+    #   - "192.168.3.0/24" # IoT VLAN, if those hosts need a route to an admin UI

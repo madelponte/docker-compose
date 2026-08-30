@@ -9,14 +9,20 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - /run/dbus:/run/dbus:ro
     restart: unless-stopped
-    privileged: true
+    # Uncomment for full local Bluetooth support. Without these capabilities,
+    # Bluetooth runs in degraded mode and cannot recover a failed adapter.
+    # cap_add:
+    #   - NET_ADMIN
+    #   - NET_RAW
+    security_opt:
+      - no-new-privileges:true
     labels:
       - "traefik.http.routers.homeassistant.rule=Host(`homeassistant.mdelponte.com`)" 
       - "traefik.http.routers.homeassistant.entrypoints=websecure"
       - "traefik.http.routers.homeassistant.tls=true"
       - "traefik.http.routers.homeassistant.tls.certresolver=cloudflare"
       - "traefik.enable=true"
-      - "traefik.http.routers.homeassistant.middlewares=http-redirect"
+      - "traefik.http.routers.homeassistant.middlewares=lan-only@file"
       - "traefik.http.services.homeassistant.loadbalancer.server.port=8123"
     networks:
       - proxynet

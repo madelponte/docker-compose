@@ -1,21 +1,24 @@
 services:
   socket-proxy:
-    image: lscr.io/linuxserver/socket-proxy:latest
+    image: ghcr.io/wollomatic/socket-proxy:1
     container_name: socket-proxy
     restart: unless-stopped
-    environment:
-      # Traefik only needs read access to container metadata and events.
-      CONTAINERS: "1"
-      EVENTS: "1"
-      PING: "1"
-      VERSION: "1"
-      POST: "0"
-      LOG_LEVEL: warning
+    user: "0:0"
+    command:
+      - '-listenip=0.0.0.0' # required: default is 127.0.0.1, i.e. unreachable
+      - '-allowfrom=traefik' # client allowlist: nothing else, not even the host
+      - '-allowGET=/(v1\.[0-9]{1,2}/)?(_ping|version|containers/json(\?.*)?|containers/[^/?]+/json(\?.*)?|events(\?.*)?)'
+      - '-allowHEAD=/_ping' # required since Traefik >= 3.6.1 (API version probe)
+      - '-loglevel=info' # logs the active allowlist at boot + every "blocked request"
+      - '-watchdoginterval=3600' # exit if dockerd's socket inode goes stale, so
+      - '-stoponwatchdog' # `restart` reopens it instead of Traefik silently aging out
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock:ro
     networks:
       - docker-api
     read_only: true
+    cap_drop:
+      - ALL
     tmpfs:
       - /run
     security_opt:
@@ -44,11 +47,8 @@ services:
       - "traefik.http.routers.dashboard.tls.certresolver=cloudflare"
       - "traefik.http.routers.dashboard.tls.domains[0].main=mdelponte.com"
       - "traefik.http.routers.dashboard.tls.domains[0].sans=*.mdelponte.com"
-      # middlewares
       - "traefik.http.middlewares.homelab-auth.basicauth.usersfile=/run/secrets/basic_auth_users"
-      - "traefik.http.routers.dashboard.middlewares=homelab-auth@docker"
-      - "traefik.http.middlewares.http-redirect.redirectscheme.scheme=https"
-      - "traefik.http.middlewares.local-whitelist.ipwhitelist.sourcerange=127.0.0.1/32, 192.168.2.0/24"
+      - "traefik.http.routers.dashboard.middlewares=lan-only@file,homelab-auth@docker"
     ports:
       - "80:80"
       - "443:443"

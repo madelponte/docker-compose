@@ -38,7 +38,7 @@ services:
       - "traefik.http.routers.searxng.tls=true"
       - "traefik.http.routers.searxng.tls.certresolver=cloudflare"
       - "traefik.enable=true"
-      - "traefik.http.routers.searxng.middlewares=http-redirect"
+      - "traefik.http.routers.searxng.middlewares=lan-only@file"
       - "traefik.http.services.searxng.loadbalancer.server.port=8080"
     logging:
       driver: "json-file"

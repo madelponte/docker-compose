@@ -1,16 +1,4 @@
 services:
-  watchtower:
-    image: containrrr/watchtower:latest
-    command: --cleanup --label-enable --interval 3600
-    container_name: Watchtower
-    security_opt:
-      - no-new-privileges:true
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-    labels:
-      com.centurylinklabs.watchtower.enable: "true"
-    restart: unless-stopped
-
   archiveTeamWarrior:
     image: atdr.meo.ws/archiveteam/warrior-dockerfile
     container_name: archiveTeamWarrior
@@ -25,6 +13,4 @@ services:
       - CONCURRENT_ITEMS=3
     ports:
       - "192.168.2.27:8001:8001"
-    labels:
-      com.centurylinklabs.watchtower.enable: "true"
     restart: always

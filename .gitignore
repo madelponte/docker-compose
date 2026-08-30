@@ -1,1 +1,6 @@
 *.env
+secrets/
+*.key
+*.pem
+acme.json
+htpasswd
