@@ -15,8 +15,6 @@ services:
       - jellyfin-cache:/cache
       - /mnt/media:/data/media
     restart: 'unless-stopped'
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
     networks:
       - proxynet
     devices:
