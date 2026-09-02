@@ -9,14 +9,18 @@ services:
       - PGID=1000
       - TZ=America/New_York
       - MONGO_USER=unifi
-      - MONGO_PASS=${MONGOPASS}
+      - MONGO_PASS=${MONGOPASS:?MONGOPASS must be set}
       - MONGO_HOST=unifi-db
       - MONGO_PORT=27017
       - MONGO_DBNAME=unifi
+      - MONGO_AUTHSOURCE=admin
       - MEM_LIMIT=1024 #optional
       - MEM_STARTUP=1024 #optional
     volumes:
       - /srv/unifi/config:/config
+    depends_on:
+      unifi-db:
+        condition: service_healthy
     ports:
       #- 8443:8443
       - 192.168.2.27:3478:3478/udp
@@ -42,13 +46,26 @@ services:
       - proxynet
       - unifi
   unifi-db:
-    image: docker.io/mongo:6
+    image: docker.io/mongo:8
     container_name: unifi-db
     security_opt:
       - no-new-privileges:true
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGOROOTPASS:?MONGOROOTPASS must be set}
+      - MONGO_USER=unifi
+      - MONGO_PASS=${MONGOPASS:?MONGOPASS must be set}
+      - MONGO_DBNAME=unifi
+      - MONGO_AUTHSOURCE=admin
     volumes:
       - /srv/unifi/db:/data/db
-      - /srv/unifi/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+      - /srv/unifi/init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh:ro
+    healthcheck:
+      test: ["CMD-SHELL", "mongosh --quiet --host 127.0.0.1 --username \"$${MONGO_USER}\" --password \"$${MONGO_PASS}\" --authenticationDatabase \"$${MONGO_AUTHSOURCE}\" \"$${MONGO_DBNAME}\" --eval 'quit(db.runCommand({ ping: 1 }).ok ? 0 : 2)' >/dev/null 2>&1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
     restart: unless-stopped
     networks:
       - unifi
