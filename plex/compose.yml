@@ -1,6 +1,6 @@
 services:
   plex:
-    image: docker.io/plexinc/pms-docker:latest
+    image: docker.io/plexinc/pms-docker:public
     container_name: plex
     hostname: plex
     security_opt:
