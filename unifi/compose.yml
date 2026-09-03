@@ -49,8 +49,8 @@ services:
     # The DHI runtime image does not run /docker-entrypoint-initdb.d scripts.
     # To initialize a new empty database, stop the stack, swap these image
     # lines, initialize with the official image, and then swap them back.
-    image: dhi.io/mongodb:8.3.8
-    # image: docker.io/mongo:8.3.8
+    image: dhi.io/mongodb:8
+    # image: docker.io/mongo:8
     container_name: unifi-db
     command: ["--auth", "--bind_ip_all"]
     security_opt:
