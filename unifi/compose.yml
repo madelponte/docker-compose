@@ -64,7 +64,7 @@ services:
       - MONGO_AUTHSOURCE=admin
     volumes:
       - /srv/unifi/db:/data/db
-      - /srv/unifi/init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh:ro
+      - ./init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh:ro
     restart: unless-stopped
     networks:
       - unifi
