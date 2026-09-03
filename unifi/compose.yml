@@ -20,7 +20,7 @@ services:
       - /srv/unifi/config:/config
     depends_on:
       unifi-db:
-        condition: service_healthy
+        condition: service_started
     ports:
       #- 8443:8443
       - 192.168.2.27:3478:3478/udp
@@ -46,8 +46,13 @@ services:
       - proxynet
       - unifi
   unifi-db:
-    image: docker.io/mongo:8
+    # The DHI runtime image does not run /docker-entrypoint-initdb.d scripts.
+    # To initialize a new empty database, stop the stack, swap these image
+    # lines, initialize with the official image, and then swap them back.
+    image: dhi.io/mongodb:8.3.8
+    # image: docker.io/mongo:8.3.8
     container_name: unifi-db
+    command: ["--auth", "--bind_ip_all"]
     security_opt:
       - no-new-privileges:true
     environment:
@@ -60,12 +65,6 @@ services:
     volumes:
       - /srv/unifi/db:/data/db
       - /srv/unifi/init-mongo.sh:/docker-entrypoint-initdb.d/init-mongo.sh:ro
-    healthcheck:
-      test: ["CMD-SHELL", "mongosh --quiet --host 127.0.0.1 --username \"$${MONGO_USER}\" --password \"$${MONGO_PASS}\" --authenticationDatabase \"$${MONGO_AUTHSOURCE}\" \"$${MONGO_DBNAME}\" --eval 'quit(db.runCommand({ ping: 1 }).ok ? 0 : 2)' >/dev/null 2>&1"]
-      interval: 10s
-      timeout: 5s
-      retries: 12
-      start_period: 30s
     restart: unless-stopped
     networks:
       - unifi
