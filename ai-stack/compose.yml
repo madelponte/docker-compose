@@ -3,8 +3,8 @@ services:
     image: ghcr.io/mostlygeek/llama-swap:unified-vulkan
     container_name: llama-swap
     restart: unless-stopped
-    environment:
-      - 'LLAMA_SWAP_API_KEY=${LLAMA_SWAP_API_KEY}'
+    env_file:
+      - ./env/llama-swap.env
     security_opt:
       - seccomp:unconfined
       - no-new-privileges:true
@@ -29,8 +29,10 @@ services:
       - proxynet
 
   open-webui:
-    image: ghcr.io/open-webui/open-webui:${WEBUI_DOCKER_TAG-main}
+    image: ghcr.io/open-webui/open-webui:main
     container_name: open-webui
+    env_file:
+      - ./env/open-webui.env
     security_opt:
       - no-new-privileges:true
     volumes:
@@ -38,16 +40,7 @@ services:
     depends_on:
       - llama-swap
     #ports:
-    #  - ${OPEN_WEBUI_PORT-3000}:8080
-    environment:
-      # Keep this value stable across container recreations so existing JWTs
-      # and encrypted OAuth/MCP credentials remain valid.
-      WEBUI_SECRET_KEY: "${WEBUI_SECRET_KEY:?WEBUI_SECRET_KEY must be set}"
-      WEBUI_URL: "${WEBUI_URL:-https://ai.mdelponte.com}"
-      WEBUI_SESSION_COOKIE_SECURE: "true"
-      WEBUI_AUTH_COOKIE_SECURE: "true"
-      ENABLE_SIGNUP: "false"
-      JWT_EXPIRES_IN: "${WEBUI_JWT_EXPIRES_IN:-4w}"
+    #  - 3000:8080
     restart: unless-stopped
     labels:
       - "traefik.http.routers.open-webui.rule=Host(`ai.mdelponte.com`)" 
@@ -68,7 +61,7 @@ services:
       - no-new-privileges:true
     restart: unless-stopped
     env_file:
-      - .env
+      - ./env/mcp-server.env
     #ports:
     #  - "8000:8000"
     labels:
@@ -99,11 +92,8 @@ services:
     container_name: flaresolverr
     security_opt:
       - no-new-privileges:true
-    environment:
-      - LOG_LEVEL=${LOG_LEVEL:-info}
-      - LOG_HTML=${LOG_HTML:-false}
-      - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
-      - TZ=America/New_York
+    env_file:
+      - ./env/flaresolverr.env
     restart: unless-stopped
     networks:
       - ainet
