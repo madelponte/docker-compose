@@ -57,7 +57,7 @@ services:
       - no-new-privileges:true
     environment:
       - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=${MONGOROOTPASS:?MONGOROOTPASS must be set}
+      #- MONGO_INITDB_ROOT_PASSWORD=${MONGOROOTPASS:?MONGOROOTPASS must be set}
       - MONGO_USER=unifi
       - MONGO_PASS=${MONGOPASS:?MONGOPASS must be set}
       - MONGO_DBNAME=unifi
