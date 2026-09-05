@@ -1,0 +1,52 @@
+# TLS options, served by the file provider. The directory is watched, so edits
+# hot-reload - but this file lives in git, so `git pull` is needed on BOTH
+# Traefik hosts for them to agree.
+#
+# Note this is a root-level `tls:` key, not `http.tls:` - same reason
+# middlewares.yaml opens with a root-level `http:` key. Each file in this
+# directory is one slice of the dynamic configuration.
+#
+# Docs: https://doc.traefik.io/traefik/reference/routing-configuration/http/tls/tls-options/
+
+tls:
+  options:
+    # `default` is special: it applies to every router that does not set
+    # tls.options itself, which is every router in this repo. So there is
+    # nothing to remember to add to a new service, and a service that forgets
+    # to opt in still gets the strict settings.
+    default:
+      # Drops TLS 1.2 entirely: no RSA key exchange, no CBC padding-oracle
+      # surface, no downgrade negotiation. 1-RTT handshakes.
+      minVersion: VersionTLS13
+
+      # Reject the handshake when the client sends no SNI, or an SNI matching
+      # none of the loaded certificates, instead of falling back to the default
+      # (self-signed) certificate. This stops https://<server-ip>/ and
+      # random-SNI scanners from getting a live response that confirms the
+      # proxy and its backends exist.
+      #
+      # Scope note: this matches SNI against loaded *certificates*, not against
+      # router Host() rules. An SNI covered by your wildcard but with no
+      # matching router still completes and returns a plain 404.
+      #
+      # Every service here is reached by hostname, so this should be
+      # transparent. Two things to check:
+      #   - any uptime monitor probing https://<ip>:443 must switch to the FQDN
+      #   - `openssl s_client` needs -servername
+      sniStrict: true
+
+    # Escape hatch for a client that cannot do TLS 1.3. The realistic candidate
+    # is a smart-TV or set-top Jellyfin app, since jellyfin.mdelponte.com is
+    # the one router with no lan-only in front of it.
+    #
+    # cipherSuites is deliberately unset: Go's TLS 1.2 defaults are already
+    # restricted to ECDHE + AEAD, and hardcoding a list here is how sites end
+    # up serving a weaker set than they intended.
+    #
+    # To use it, add to that one service and leave everything else on default:
+    #   - "traefik.http.routers.jellyfin.tls.options=mintls12@file"
+    # The @file namespace is required for cross-provider references; it is not
+    # needed for `default`, which has no provider namespace.
+    mintls12:
+      minVersion: VersionTLS12
+      sniStrict: true
