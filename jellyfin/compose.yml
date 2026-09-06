@@ -13,7 +13,7 @@ services:
     volumes:
       - /srv/jellyfin/config:/config
       - jellyfin-cache:/cache
-      - /mnt/media:/data/media
+      - /mnt/media:/data/media:ro
     restart: 'unless-stopped'
     networks:
       - proxynet

@@ -22,7 +22,7 @@ services:
     volumes:
       - /srv/plex/config:/config
       - plex-transcode:/transcode
-      - /mnt/media:/data/media
+      - /mnt/media:/data/media:ro
     restart: unless-stopped
 volumes:
   plex-transcode:

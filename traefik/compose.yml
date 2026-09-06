@@ -48,6 +48,8 @@ services:
       - "traefik.http.routers.dashboard.tls.domains[0].main=mdelponte.com"
       - "traefik.http.routers.dashboard.tls.domains[0].sans=*.mdelponte.com"
       - "traefik.http.middlewares.homelab-auth.basicauth.usersfile=/run/secrets/basic_auth_users"
+      # Authenticate at Traefik without passing shared credentials to backends.
+      - "traefik.http.middlewares.homelab-auth.basicauth.removeheader=true"
       - "traefik.http.routers.dashboard.middlewares=lan-only@file,homelab-auth@docker"
     ports:
       - "80:80"
