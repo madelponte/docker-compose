@@ -60,8 +60,8 @@ services:
     security_opt:
       - no-new-privileges:true
     restart: unless-stopped
-    env_file:
-      - ./env/mcp-server.env
+    volumes:
+      - /srv/mcp-server/config.yaml:/app/config.yaml:ro
     #ports:
     #  - "8000:8000"
     labels:
