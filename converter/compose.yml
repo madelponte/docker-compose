@@ -9,11 +9,6 @@ services:
       - DARK_MODE=1
     #ports:
     #  - "5800:5800"
-    devices:
-      - /dev/kfd:/dev/kfd
-      - /dev/dri:/dev/dri
-    group_add:
-      - video
     volumes:
       - /srv/handbrake/config:/config:rw
       - /mnt/media/output:/output:rw
@@ -27,32 +22,34 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.handbrake.middlewares=lan-only@file"
       - "traefik.http.services.handbrake.loadbalancer.server.port=5800"
+      - "traefik.http.routers.handbrake.middlewares=lan-only@file,homelab-auth@docker"
     networks:
       - proxynet
-  makemkv:
-    image: docker.io/jlesage/makemkv:latest
-    container_name: makemkv
-    security_opt:
-      - no-new-privileges:true
-    #ports:
-    #  - 5801:5800
-    devices:
-      - /dev/sr0:/dev/sr0
-    volumes:
-      - /srv/makemkv/config:/config
-      - /mnt/media:/storage:ro
-      - /mnt/media/output:/output
-    restart: unless-stopped
-    labels:
-      - "traefik.http.routers.makemkv.rule=Host(`makemkv.mdelponte.com`)" 
-      - "traefik.http.routers.makemkv.entrypoints=websecure"
-      - "traefik.http.routers.makemkv.tls=true"
-      - "traefik.http.routers.makemkv.tls.certresolver=cloudflare"
-      - "traefik.enable=true"
-      - "traefik.http.routers.makemkv.middlewares=lan-only@file"
-      - "traefik.http.services.makemkv.loadbalancer.server.port=5800"
-    networks:
-      - proxynet
+#  makemkv:
+#    image: docker.io/jlesage/makemkv:latest
+#    container_name: makemkv
+#    security_opt:
+#      - no-new-privileges:true
+#    #ports:
+#    #  - 5801:5800
+#    devices:
+#      - /dev/sr0:/dev/sr0
+#    volumes:
+#      - /srv/makemkv/config:/config
+#      - /mnt/media:/storage:ro
+#      - /mnt/media/output:/output
+#    restart: unless-stopped
+#    labels:
+#      - "traefik.http.routers.makemkv.rule=Host(`makemkv.mdelponte.com`)" 
+#      - "traefik.http.routers.makemkv.entrypoints=websecure"
+#      - "traefik.http.routers.makemkv.tls=true"
+#      - "traefik.http.routers.makemkv.tls.certresolver=cloudflare"
+#      - "traefik.enable=true"
+#      - "traefik.http.routers.makemkv.middlewares=lan-only@file"
+#      - "traefik.http.services.makemkv.loadbalancer.server.port=5800"
+#      - "traefik.http.routers.makemkv.middlewares=lan-only@file,homelab-auth@docker"
+#    networks:
+#      - proxynet
 networks:
   proxynet:
     external: true
