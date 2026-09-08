@@ -79,6 +79,16 @@ services:
   tika:
     image: apache/tika:latest-full
     container_name: tika
+    command: ["-c", "/tika-config.json"]
+    # Includes the parent JVM, one 2 GiB worker, and native Tesseract overhead.
+    mem_limit: 4g
+    volumes:
+      - type: bind
+        source: ./tika-config.json
+        target: /tika-config.json
+        read_only: true
+        bind:
+          create_host_path: false
     security_opt:
       - no-new-privileges:true
     #ports:
