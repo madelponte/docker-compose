@@ -1,6 +1,6 @@
 services:
   unifi-network-application:
-    image: lscr.io/linuxserver/unifi-network-application:latest
+    image: docker.io/linuxserver/unifi-network-application:latest
     container_name: unifi
     security_opt:
       - no-new-privileges:true

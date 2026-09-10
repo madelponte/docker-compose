@@ -1,6 +1,6 @@
 services:
   llama-swap:
-    image: ghcr.io/mostlygeek/llama-swap:rocm
+    image: ghcr.io/madelponte/llama-halo-swap:unified-vulkan
     container_name: llama-swap
     restart: unless-stopped
     env_file:
@@ -23,7 +23,7 @@ services:
       - video
     volumes:
       - /opt/models:/models
-      - /srv/llama-swap/config.yaml:/app/config.yaml:ro
+      - /srv/llama-swap/config.yaml:/etc/llama-swap/config/config.yaml:ro
     networks:
       - ainet
       - proxynet
@@ -77,7 +77,7 @@ services:
       - proxynet
 
   tika:
-    image: apache/tika:latest-full
+    image: docker.io/apache/tika:latest-full
     container_name: tika
     command: ["-c", "/tika-config.json"]
     # Includes the parent JVM, one 2 GiB worker, and native Tesseract overhead.
