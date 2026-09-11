@@ -1,0 +1,79 @@
+services:
+  unifi-os-server:
+    image: ghcr.io/madelponte/unifi-os-server:latest
+    platform: linux/amd64
+    container_name: unifi
+    restart: unless-stopped
+    stop_signal: SIGRTMIN+3
+    stop_grace_period: 2m
+
+    # UniFi OS runs its components as systemd services.
+    cgroup: host
+    cap_add:
+      - NET_ADMIN
+      - NET_RAW
+    extra_hosts:
+      - host.docker.internal:host-gateway
+      - host.containers.internal:host-gateway
+    environment:
+      TZ: America/New_York
+      # Hostname or LAN IP advertised to devices as their inform address.
+      UOS_SYSTEM_IP: ${UOS_SYSTEM_IP:-unifi.mdelponte.com}
+    tmpfs:
+      - /run:exec
+      - /run/lock
+      - /tmp:exec
+      - /var/lib/journal
+      - /var/opt/unifi/tmp:size=64m
+    healthcheck:
+      test: [CMD, curl, --fail, http://127.0.0.1/api/ping]
+      interval: 60s
+      timeout: 10s
+      retries: 5
+      start_period: 2m
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:rw
+      - /srv/unifi-os/os-server/persistent:/persistent
+      - /srv/unifi-os/os-server/var-log:/var/log
+      - /srv/unifi-os/os-server/data:/data
+      - /srv/unifi-os/os-server/srv:/srv
+      - /srv/unifi-os/os-server/var-lib-unifi:/var/lib/unifi
+      - /srv/unifi-os/os-server/var-lib-mongodb:/var/lib/mongodb
+      - /srv/unifi-os/os-server/etc-rabbitmq-ssl:/etc/rabbitmq/ssl
+    ports:
+      # Required for device communication, adoption, and discovery.
+      - 8080:8080
+      - 3478:3478/udp
+      - 10003:10003/udp
+
+      # Optional UniFi services.
+      - 5514:5514/udp # Remote syslog
+      - 6789:6789 # Mobile speed test
+      # - 11443:443 # Direct UniFi OS web UI (Traefik is used below)
+      # - 5005:5005 # RTP control
+      # - 5671:5671 # AMQPS
+      # - 8444:8444 # Secure hotspot portal
+      # - 8880:8880 # Hotspot redirect
+      # - 8881:8881 # Hotspot redirect
+      # - 8882:8882 # Hotspot redirect
+      # - 9543:9543 # Identity Hub
+      # - 127.0.0.1:11084:11084 # Site supervisor; do not expose publicly
+      # - 28082:28082 # Device support-file downloads
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=proxynet
+      - traefik.http.routers.unifi.rule=Host(`unifi.mdelponte.com`)
+      - traefik.http.routers.unifi.entrypoints=websecure
+      - traefik.http.routers.unifi.tls=true
+      - traefik.http.routers.unifi.tls.certresolver=cloudflare
+      - traefik.http.routers.unifi.middlewares=lan-only@file
+      - traefik.http.services.unifi.loadbalancer.server.port=443
+      - traefik.http.services.unifi.loadbalancer.server.scheme=https
+      - traefik.http.services.unifi.loadbalancer.serverstransport=unifi-insecure@file
+    networks:
+      - proxynet
+
+networks:
+  proxynet:
+    external: true
+    name: proxynet
