@@ -61,7 +61,6 @@ services:
       # - 28082:28082 # Device support-file downloads
     labels:
       - traefik.enable=true
-      - traefik.docker.network=proxynet
       - traefik.http.routers.unifi.rule=Host(`unifi.mdelponte.com`)
       - traefik.http.routers.unifi.entrypoints=websecure
       - traefik.http.routers.unifi.tls=true
