@@ -41,10 +41,11 @@ services:
       - /srv/unifi-os/os-server/var-lib-mongodb:/var/lib/mongodb
       - /srv/unifi-os/os-server/etc-rabbitmq-ssl:/etc/rabbitmq/ssl
     ports:
-      # Required for device communication, adoption, and discovery.
-      - 8080:8080
-      - 3478:3478/udp
-      - 10003:10003/udp
+      # Required for device communication and adoption.
+      - 8080:8080 # Inform endpoint: http://HOST:8080/inform
+      - 3478:3478/udp # STUN
+      - 10001:10001/udp # Network device discovery
+      - 10003:10003/udp # UniFi OS Server discovery
 
       # Optional UniFi services.
       - 5514:5514/udp # Remote syslog
@@ -52,12 +53,15 @@ services:
       # - 11443:443 # Direct UniFi OS web UI (Traefik is used below)
       # - 5005:5005 # RTP control
       # - 5671:5671 # AMQPS
+      # - 8443:8443 # Direct Network application GUI/API
       # - 8444:8444 # Secure hotspot portal
       # - 8880:8880 # Hotspot redirect
       # - 8881:8881 # Hotspot redirect
       # - 8882:8882 # Hotspot redirect
       # - 9543:9543 # Identity Hub
       # - 127.0.0.1:11084:11084 # Site supervisor; do not expose publicly
+      - 1900:1900/udp # Optional L2 discoverability/SSDP
+      - 10101:10101/udp # Client fingerprinting
       # - 28082:28082 # Device support-file downloads
     labels:
       - traefik.enable=true
