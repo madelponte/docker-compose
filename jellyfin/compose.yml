@@ -27,6 +27,27 @@ services:
       - "traefik.enable=true"
       - "traefik.http.services.jellyfin.loadbalancer.server.port=8096"
 
+      # General limit: generous, sized for a library page that fires dozens of
+      # parallel poster/thumbnail requests. A video stream is one long request
+      # (plus occasional range requests), so it barely registers.
+      - "traefik.http.middlewares.jellyfin-rl.ratelimit.average=100"
+      - "traefik.http.middlewares.jellyfin-rl.ratelimit.period=1s"
+      - "traefik.http.middlewares.jellyfin-rl.ratelimit.burst=300"
+      - "traefik.http.routers.jellyfin.middlewares=jellyfin-rl"
+
+      # Strict limit on login endpoints only. This is what actually stops
+      # brute forcing; a real user rarely makes more than a few attempts.
+      - "traefik.http.middlewares.jellyfin-login-rl.ratelimit.average=10"
+      - "traefik.http.middlewares.jellyfin-login-rl.ratelimit.period=1m"
+      - "traefik.http.middlewares.jellyfin-login-rl.ratelimit.burst=5"
+      - "traefik.http.routers.jellyfin-login.rule=Host(`jellyfin.mdelponte.com`) && (PathRegexp(`(?i)^/Users/Authenticate`) || PathRegexp(`(?i)^/QuickConnect`))"
+      - "traefik.http.routers.jellyfin-login.priority=100"
+      - "traefik.http.routers.jellyfin-login.entrypoints=websecure"
+      - "traefik.http.routers.jellyfin-login.tls=true"
+      - "traefik.http.routers.jellyfin-login.tls.certresolver=cloudflare"
+      - "traefik.http.routers.jellyfin-login.service=jellyfin"
+      - "traefik.http.routers.jellyfin-login.middlewares=jellyfin-login-rl"
+
 networks:
   proxynet:
     external: true
