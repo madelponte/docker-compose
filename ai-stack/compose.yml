@@ -26,7 +26,6 @@ services:
       - /srv/llama-swap/config.yaml:/etc/llama-swap/config/config.yaml:ro
     networks:
       - ainet
-      - proxynet
 
   open-webui:
     image: ghcr.io/open-webui/open-webui:main
@@ -51,7 +50,6 @@ services:
       - "traefik.http.routers.open-webui.middlewares=lan-only@file"
       - "traefik.http.services.open-webui.loadbalancer.server.port=8080"
     networks:
-      - proxynet
       - ainet
 
   mcp-server:
@@ -74,7 +72,6 @@ services:
       - "traefik.http.services.mcp.loadbalancer.server.port=8000"
     networks:
       - ainet
-      - proxynet
 
   tika:
     image: docker.io/apache/tika:latest-full
@@ -109,8 +106,7 @@ services:
       - ainet
 
 networks:
-  proxynet:
-    external: true
-    name: proxynet
   ainet:
+    external: true
     name: ainet
+

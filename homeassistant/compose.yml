@@ -25,9 +25,9 @@ services:
       - "traefik.http.routers.homeassistant.middlewares=lan-only@file"
       - "traefik.http.services.homeassistant.loadbalancer.server.port=8123"
     networks:
-      - proxynet
+      - edge-homeassistant
 
 networks:
-  proxynet:
+  edge-homeassistant:
     external: true
-    name: proxynet
+    name: edge-homeassistant

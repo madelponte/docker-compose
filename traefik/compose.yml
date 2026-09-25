@@ -64,13 +64,56 @@ services:
       - cf_zone_api_token
       - basic_auth_users
     networks:
-      - proxynet
       - docker-api
+      - arrs
+      - ainet
+      - immich
+      - searxng
+      - edge-bentopdf
+      - edge-comfyui
+      - edge-converter
+      - edge-homeassistant
+      - edge-jellyfin
+      - edge-mealie
+      - edge-unifi
 
+# Traefik joins one network per backend stack (created by scripts/ensure-networks.sh)
+# so backends can't reach each other. The same file runs on both hosts; networks
+# for stacks that live on the other host are simply empty.
 networks:
-  proxynet:
-    name: proxynet
+  arrs:
     external: true
+    name: arrs
+  ainet:
+    external: true
+    name: ainet
+  immich:
+    external: true
+    name: immich
+  searxng:
+    external: true
+    name: searxng
+  edge-bentopdf:
+    external: true
+    name: edge-bentopdf
+  edge-comfyui:
+    external: true
+    name: edge-comfyui
+  edge-converter:
+    external: true
+    name: edge-converter
+  edge-homeassistant:
+    external: true
+    name: edge-homeassistant
+  edge-jellyfin:
+    external: true
+    name: edge-jellyfin
+  edge-mealie:
+    external: true
+    name: edge-mealie
+  edge-unifi:
+    external: true
+    name: edge-unifi
   docker-api:
     internal: true
 

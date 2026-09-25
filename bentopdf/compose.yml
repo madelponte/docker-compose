@@ -5,7 +5,7 @@ services:
     security_opt:
       - no-new-privileges:true
     networks:
-      - proxynet
+      - edge-bentopdf
     #ports:
     #  - "3000:8080"
     restart: unless-stopped
@@ -19,6 +19,6 @@ services:
       - "traefik.http.services.bentopdf.loadbalancer.server.port=8080"
 
 networks:
-  proxynet:
+  edge-bentopdf:
     external: true
-    name: proxynet
+    name: edge-bentopdf

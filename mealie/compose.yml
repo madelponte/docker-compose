@@ -25,7 +25,7 @@ services:
       TOKEN_TIME: "${MEALIE_TOKEN_TIME:-720}"
       SCRAPER_FLARESOLVERR_URL: "http://flaresolverr:8191"
     networks:
-      - proxynet
+      - edge-mealie
     labels:
       - "traefik.http.routers.mealie.rule=Host(`mealie.mdelponte.com`)" 
       - "traefik.http.routers.mealie.entrypoints=websecure"
@@ -35,6 +35,6 @@ services:
       - "traefik.http.routers.mealie.middlewares=lan-only@file"
 
 networks:
-  proxynet:
+  edge-mealie:
     external: true
-    name: proxynet
+    name: edge-mealie

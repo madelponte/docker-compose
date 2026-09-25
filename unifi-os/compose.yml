@@ -74,9 +74,9 @@ services:
       - traefik.http.services.unifi.loadbalancer.server.scheme=https
       - traefik.http.services.unifi.loadbalancer.serverstransport=unifi-insecure@file
     networks:
-      - proxynet
+      - edge-unifi
 
 networks:
-  proxynet:
+  edge-unifi:
     external: true
-    name: proxynet
+    name: edge-unifi
