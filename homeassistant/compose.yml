@@ -9,6 +9,8 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - /run/dbus:/run/dbus:ro
     restart: unless-stopped
+    #ports:
+    #  - 8123:8123
     # Uncomment for full local Bluetooth support. Without these capabilities,
     # Bluetooth runs in degraded mode and cannot recover a failed adapter.
     # cap_add:
