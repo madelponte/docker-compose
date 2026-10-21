@@ -1,13 +1,8 @@
-# Speakr + OpenASR for a single Linux/Debian Docker host.
-# OpenASR stays loopback-only; Speakr shares its network namespace.
-# Thus, publish Speakr's port on the openasr service, not on speakr.
 services:
   openasr:
+    container_name: openasr
     image: quintinshaw/openasr:latest
     restart: unless-stopped
-    # Override the official image's remote/pairing server configuration:
-    # loopback mode is HTTP without remote-device pairing.
-    command: ["serve", "--addr", "127.0.0.1:8080"]
     environment:
       OPENASR_HOME: /data
       OPENASR_MODEL: whisper-small
@@ -19,6 +14,7 @@ services:
   speakr:
     image: learnedmachine/speakr:lite
     restart: unless-stopped
+    container_name: speakr
     depends_on:
       - openasr
     env_file:
