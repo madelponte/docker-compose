@@ -21,8 +21,6 @@ services:
     restart: unless-stopped
     depends_on:
       - openasr
-    # Allows Speakr to call OpenASR at http://127.0.0.1:8080.
-    network_mode: "service:openasr"
     env_file:
       - .env
     labels:
