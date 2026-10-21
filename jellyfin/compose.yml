@@ -16,7 +16,7 @@ services:
       - /mnt/media:/data/media:ro
     restart: 'unless-stopped'
     networks:
-      - proxynet
+      - edge-jellyfin
     devices:
       - /dev/dri/renderD128:/dev/dri/renderD128
     labels:
@@ -49,8 +49,8 @@ services:
       - "traefik.http.routers.jellyfin-login.middlewares=jellyfin-login-rl"
 
 networks:
-  proxynet:
+  edge-jellyfin:
     external: true
-    name: proxynet
+    name: edge-jellyfin
 volumes:
   jellyfin-cache:

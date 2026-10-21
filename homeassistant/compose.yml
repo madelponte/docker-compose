@@ -9,6 +9,8 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - /run/dbus:/run/dbus:ro
     restart: unless-stopped
+    #ports:
+    #  - 8123:8123
     # Uncomment for full local Bluetooth support. Without these capabilities,
     # Bluetooth runs in degraded mode and cannot recover a failed adapter.
     # cap_add:
@@ -25,9 +27,9 @@ services:
       - "traefik.http.routers.homeassistant.middlewares=lan-only@file"
       - "traefik.http.services.homeassistant.loadbalancer.server.port=8123"
     networks:
-      - proxynet
+      - edge-homeassistant
 
 networks:
-  proxynet:
+  edge-homeassistant:
     external: true
-    name: proxynet
+    name: edge-homeassistant

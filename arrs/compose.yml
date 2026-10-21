@@ -21,7 +21,6 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.jackett.middlewares=lan-only@file"
     networks:
-      - proxynet
       - arrs
 
   sonarr:
@@ -49,7 +48,6 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.sonarr.middlewares=lan-only@file"
     networks:
-      - proxynet
       - arrs
 
   radarr:
@@ -77,7 +75,6 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.radarr.middlewares=lan-only@file"
     networks:
-      - proxynet
       - arrs
 
   #lidarr:
@@ -131,7 +128,6 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.bazarr.middlewares=lan-only@file"
     networks:
-      - proxynet
       - arrs
 
   unpackerr:
@@ -229,8 +225,6 @@ services:
   #  restart: unless-stopped
 
 networks:
-  proxynet:
-    external: true
-    name: proxynet
   arrs:
+    external: true
     name: arrs

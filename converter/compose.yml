@@ -24,7 +24,7 @@ services:
       - "traefik.http.services.handbrake.loadbalancer.server.port=5800"
       - "traefik.http.routers.handbrake.middlewares=lan-only@file,homelab-auth@docker"
     networks:
-      - proxynet
+      - edge-converter
 #  makemkv:
 #    image: docker.io/jlesage/makemkv:latest
 #    container_name: makemkv
@@ -49,8 +49,8 @@ services:
 #      - "traefik.http.services.makemkv.loadbalancer.server.port=5800"
 #      - "traefik.http.routers.makemkv.middlewares=lan-only@file,homelab-auth@docker"
 #    networks:
-#      - proxynet
+#      - edge-converter
 networks:
-  proxynet:
+  edge-converter:
     external: true
-    name: proxynet
+    name: edge-converter

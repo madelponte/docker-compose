@@ -39,9 +39,9 @@ services:
       - "traefik.http.routers.comfyui.middlewares=lan-only@file,homelab-auth@docker"
     restart: unless-stopped
     networks:
-      - proxynet
+      - edge-comfyui
 
 networks:
-  proxynet:
+  edge-comfyui:
     external: true
-    name: proxynet
+    name: edge-comfyui

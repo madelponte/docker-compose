@@ -42,8 +42,9 @@ services:
       - "traefik.http.routers.transmission.middlewares=lan-only@file"
       - "traefik.http.services.transmission.loadbalancer.server.port=9091"
     networks:
-      - proxynet
+      - arrs # shared with sonarr/radarr/jackett so they can reach the download client
 networks:
-  proxynet:
+  arrs:
     external: true
-    name: proxynet
+    name: arrs
+
