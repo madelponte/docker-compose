@@ -13,6 +13,8 @@ services:
       OPENASR_MODEL: whisper-small
     volumes:
       - /srv/speakr/openasr-data:/data
+    networks:
+      - speakr
 
   speakr:
     image: learnedmachine/speakr:lite
@@ -36,7 +38,6 @@ services:
       - /srv/speakr/instance:/data/instance
     networks:
       - speakr
-      - proxynet
 
 networks:
   speakr:
