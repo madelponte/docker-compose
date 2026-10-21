@@ -1,0 +1,44 @@
+# Speakr + OpenASR for a single Linux/Debian Docker host.
+# OpenASR stays loopback-only; Speakr shares its network namespace.
+# Thus, publish Speakr's port on the openasr service, not on speakr.
+services:
+  openasr:
+    image: quintinshaw/openasr:latest
+    restart: unless-stopped
+    # Override the official image's remote/pairing server configuration:
+    # loopback mode is HTTP without remote-device pairing.
+    command: ["serve", "--addr", "127.0.0.1:8080"]
+    environment:
+      OPENASR_HOME: /data
+      OPENASR_MODEL: whisper-small
+    volumes:
+      - /srv/speakr/openasr-data:/data
+
+  speakr:
+    image: learnedmachine/speakr:lite
+    restart: unless-stopped
+    depends_on:
+      - openasr
+    # Allows Speakr to call OpenASR at http://127.0.0.1:8080.
+    network_mode: "service:openasr"
+    env_file:
+      - .env
+    labels:
+      - "traefik.http.routers.speakr.rule=Host(`speakr.mdelponte.com`)" 
+      - "traefik.http.routers.speakr.entrypoints=websecure"
+      - "traefik.http.routers.speakr.tls=true"
+      - "traefik.http.routers.speakr.tls.certresolver=cloudflare"
+      - "traefik.enable=true"
+      - "traefik.http.routers.speakr.middlewares=lan-only@file"
+      - "traefik.http.services.speakr.loadbalancer.server.port=8899"
+    volumes:
+      - /srv/speakr/uploads:/data/uploads
+      - /srv/speakr/instance:/data/instance
+    networks:
+      - speakr
+      - proxynet
+
+networks:
+  speakr:
+    external: true
+    name: speakr
