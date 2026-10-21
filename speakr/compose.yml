@@ -1,24 +1,15 @@
 services:
-  openasr:
-    container_name: openasr
-    image: quintinshaw/openasr:latest
-    restart: unless-stopped
-    environment:
-      OPENASR_HOME: /data
-      OPENASR_MODEL: whisper-small
-    volumes:
-      - /srv/speakr/openasr-data:/data
-    networks:
-      - speakr
-
   speakr:
+
     image: learnedmachine/speakr:lite
-    restart: unless-stopped
     container_name: speakr
-    depends_on:
-      - openasr
+    restart: unless-stopped
+    ports:
+      - "8899:8899"
     env_file:
       - .env
+    environment:
+      - LOG_LEVEL=INFO            # drop to ERROR once things work
     labels:
       - "traefik.http.routers.speakr.rule=Host(`speakr.mdelponte.com`)" 
       - "traefik.http.routers.speakr.entrypoints=websecure"
@@ -30,8 +21,32 @@ services:
     volumes:
       - /srv/speakr/uploads:/data/uploads
       - /srv/speakr/instance:/data/instance
+    depends_on:
+      - whisperx-asr
     networks:
       - speakr
+ 
+  whisperx-asr:
+    image: onerahmet/openai-whisper-asr-webservice:latest
+    container_name: whisperx-asr
+    restart: unless-stopped
+    # ports:
+    #   - "9000:9000"
+    environment:
+      - ASR_ENGINE=whisperx
+      - ASR_MODEL=large-v3-turbo   # try distil-large-v3 for speed, large-v3 for max accuracy
+      - ASR_DEVICE=cpu
+      - ASR_QUANTIZATION=int8
+      - HF_TOKEN=${HF_TOKEN}
+      - MODEL_IDLE_TIMEOUT=600
+      - OMP_NUM_THREADS=11
+    volumes:
+      - whisper-cache:/root/.cache
+    networks:
+      - speakr
+ 
+volumes:
+  whisper-cache:
 
 networks:
   speakr:
