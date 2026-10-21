@@ -1,6 +1,6 @@
 services:
   jackett:
-    image: docker.io/linuxserver/jackett:latest
+    image: docker.io/linuxserver/plex:latest
     container_name: jackett
     environment:
       - PUID=1001
