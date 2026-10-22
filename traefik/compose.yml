@@ -93,9 +93,6 @@ networks:
   searxng:
     external: true
     name: searxng
-  speakr:
-    external: true
-    name: speakr
   edge-bentopdf:
     external: true
     name: edge-bentopdf

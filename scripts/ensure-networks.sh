@@ -14,7 +14,6 @@ networks=(
   ainet
   immich
   searxng
-  speakr
   edge-bentopdf
   edge-comfyui
   edge-converter
