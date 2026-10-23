@@ -1,0 +1,28 @@
+services:
+  unsloth:
+    image: unsloth/unsloth-rocm
+    container_name: unsloth
+    restart: unless-stopped
+    devices:
+      - /dev/kfd
+      - /dev/dri
+    group_add:
+      - "${VIDEO_GID:?Set VIDEO_GID in .env}"
+      - "${RENDER_GID:?Set RENDER_GID in .env}"
+    ipc: host
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      stack:
+        soft: 67108864
+        hard: 67108864
+    ports:
+      - "8000:8000"
+      - "8888:8888"
+    environment:
+      JUPYTER_PASSWORD: "${JUPYTER_PASSWORD:-mypassword}"
+    volumes:
+      - /srv/unsloth/workspace:/workspace/host
+      - /opt/huggingface:/workspace/.cache/huggingface
+      - /srv/unsloth/unsloth-studio:/opt/unsloth-studio
