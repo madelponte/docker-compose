@@ -12,9 +12,16 @@
       "totalTaskTimeoutMillis": 75000
     }
   },
+  "engines": {
+    "tesseract": {
+      "tesseract-ocr-parser": {"skipOcr": false}
+    }
+  },
+  "text-recognizers": [
+    {"engine": "tesseract"}
+  ],
   "parsers": [
     {"default-parser": {}},
-    {"pdf-parser": {"ocr": {"strategy": "AUTO"}}},
-    {"tesseract-ocr-parser": {"skipOcr": false}}
+    {"pdf-parser": {"ocr": {"strategy": "AUTO"}}}
   ]
 }
