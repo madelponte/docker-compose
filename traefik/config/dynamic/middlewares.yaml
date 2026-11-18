@@ -15,6 +15,7 @@ http:
           - "192.168.2.64/26"
           - "192.168.2.128/25"
           - "10.13.13.0/24" # WireGuard pool
+          - "192.168.5.205/32" # Raspberry pi
           # - "172.16.0.0/12"  # DON'T: this would let any container whitelist itself
 
     # Add other VLANs / trusted subnets here if you have them, e.g.:
